@@ -6,13 +6,16 @@ import '../entities/error.dart';
 /// TODO: Заменить TransactionDto на Transaction(Entity) когда появится domain слой
 abstract interface class TransactionRepository {
   Future<Either<BaseError, TransactionResponse>> createTransaction(
-      TransactionDto transaction);
+    TransactionDto transaction,
+  );
 
   Future<Either<BaseError, TransactionResponse>> updateTransaction(
-      TransactionDto transaction);
+    TransactionDto transaction,
+  );
 
   Future<Either<BaseError, TransactionResponse>> deleteTransaction(
-      TransactionDto transaction);
+    TransactionDto transaction,
+  );
 
   Future<Either<BaseError, List<TransactionResponse>>> getTransactions();
 }
