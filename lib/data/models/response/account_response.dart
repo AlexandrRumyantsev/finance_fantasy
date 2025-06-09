@@ -1,0 +1,23 @@
+import 'package:finance_fantasy/data/models/shared/stat_item.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'account_response.freezed.dart';
+
+part 'account_response.g.dart';
+
+@freezed
+abstract class AccountResponse with _$AccountResponse {
+  const factory AccountResponse({
+    required int id,
+    required String name,
+    required String balance,
+    required String currency,
+    required StatItem incomeStat,
+    required StatItem expenseStat,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _AccountResponse;
+
+  factory AccountResponse.fromJson(Map<String, dynamic> json) =>
+      _$AccountResponseFromJson(json);
+}
