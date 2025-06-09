@@ -7,19 +7,19 @@ part 'account_history.freezed.dart';
 part 'account_history.g.dart';
 
 @freezed
-abstract class AccountHistory with _$AccountHistory {
-  const factory AccountHistory({
+abstract class AccountHistoryDto with _$AccountHistoryDto {
+  const factory AccountHistoryDto({
     required int id,
     required int accountId,
     required ChangeType changeType,
-    required AccountState previousState,
-    required AccountState newState,
+    required AccountStateDto previousState,
+    required AccountStateDto newState,
     required DateTime changeTimestamp,
     required DateTime createdAt,
-  }) = _AccountHistory;
+  }) = _AccountHistoryDto;
 
-  factory AccountHistory.fromJson(Map<String, dynamic> json) =>
-      _$AccountHistoryFromJson(json);
+  factory AccountHistoryDto.fromJson(Map<String, dynamic> json) =>
+      _$AccountHistoryDtoFromJson(json);
 }
 
 enum ChangeType {

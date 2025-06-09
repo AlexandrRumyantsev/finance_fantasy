@@ -13,7 +13,7 @@ abstract class AccountHistoryResponse with _$AccountHistoryResponse {
     required String accountName,
     required String currency,
     required String currentBalance,
-    required AccountHistory history,
+    required AccountHistoryDto history,
   }) = _AccountHistoryResponse;
 
   factory AccountHistoryResponse.fromJson(Map<String, dynamic> json) =>

@@ -5,14 +5,14 @@ part 'stat_item.freezed.dart';
 part 'stat_item.g.dart';
 
 @freezed
-abstract class StatItem with _$StatItem {
-  const factory StatItem({
+abstract class StatItemDto with _$StatItemDto {
+  const factory StatItemDto({
     required int categoryId,
     required String categoryName,
     required String emoji,
     required String amount,
-  }) = _StatItem;
+  }) = _StatItemDto;
 
-  factory StatItem.fromJson(Map<String, dynamic> json) =>
-      _$StatItemFromJson(json);
+  factory StatItemDto.fromJson(Map<String, dynamic> json) =>
+      _$StatItemDtoFromJson(json);
 }
