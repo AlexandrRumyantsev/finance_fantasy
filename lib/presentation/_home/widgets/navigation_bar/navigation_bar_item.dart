@@ -14,8 +14,6 @@ class NavigationBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor =
-        isSelected ? const Color(0xFF2AE881) : const Color(0xFF49454F);
     final fontWeight = isSelected ? FontWeight.w600 : FontWeight.w500;
     return ConstrainedBox(
       constraints: const BoxConstraints(maxHeight: 80),
@@ -33,7 +31,7 @@ class NavigationBarItem extends StatelessWidget {
               duration: isSelected
                   ? const Duration(milliseconds: 300)
                   : Duration.zero,
-              child: _buildIcon(iconColor),
+              child: _buildIcon(),
             ),
           ),
           const SizedBox(height: 4),
@@ -49,7 +47,9 @@ class NavigationBarItem extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(Color color) {
+  Widget _buildIcon() {
+    final color =
+        isSelected ? const Color(0xFF2AE881) : const Color(0xFF49454F);
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 4,
