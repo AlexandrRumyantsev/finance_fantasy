@@ -6,7 +6,7 @@ import '../../utils/either.dart';
 import '../entities/error.dart';
 
 /// TODO: Заменить AccountDto на Account(Entity) когда появится domain слой
-abstract class BankAccountRepository {
+abstract interface class BankAccountRepository {
   Future<Either<BaseError, List<AccountDto>>> getBankAccounts();
 
   Future<Either<BaseError, AccountDto>> createBankAccount({
