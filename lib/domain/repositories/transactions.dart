@@ -13,6 +13,7 @@ abstract interface class TransactionRepository {
 
   Future<Either<BaseError, TransactionResponse>> updateTransaction({
     required TransactionRequest transaction,
+    required int transactionId,
   });
 
   Future<Either<BaseError, bool>> deleteTransaction({

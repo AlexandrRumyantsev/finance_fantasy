@@ -1,0 +1,9 @@
+class AppIcons {
+  static const String _iconPrefix = 'assets/icons';
+
+  static const String bankAccount = '$_iconPrefix/bank_account.svg';
+  static const String categories = '$_iconPrefix/categories.svg';
+  static const String incomes = '$_iconPrefix/incomes.svg';
+  static const String expense = '$_iconPrefix/expense.svg';
+  static const String settings = '$_iconPrefix/settings.svg';
+}
