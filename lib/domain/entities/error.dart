@@ -4,6 +4,6 @@ class BaseError {
 
   BaseError({
     required this.message,
-    required this.stackTrace,
+    this.stackTrace = '',
   });
 }
