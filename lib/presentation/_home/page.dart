@@ -9,12 +9,44 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController();
+
   int _currentPage = 0;
 
+  final List<Widget> _pages = [
+    const ExpensePage(),
+    const IncomesPage(),
+    const BankAccountPage(),
+    const CategoriesPage(),
+    const SettingsPage(),
+  ];
+
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onNavBarTap,
+        children: _pages.map((page) => KeepAliveWrapper(child: page)).toList(),
+      ),
+      bottomNavigationBar: AppNavigationBar(
+        currentPage: _currentPage,
+        onNavBarTap: _onNavBarTap,
+        iconPaths: const [
+          AppIcons.expense,
+          AppIcons.incomes,
+          AppIcons.bankAccount,
+          AppIcons.categories,
+          AppIcons.settings,
+        ],
+        labels: const [
+          'Расходы',
+          'Доходы',
+          'Счет',
+          'Статьи',
+          'Настройки',
+        ],
+      ),
+    );
   }
 
   void _onNavBarTap(int index) {
@@ -36,25 +68,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: _onNavBarTap,
-        children: pages.map((page) => KeepAliveWrapper(child: page)).toList(),
-      ),
-      bottomNavigationBar: AppNavigationBar(
-        currentPage: _currentPage,
-        onNavBarTap: _onNavBarTap,
-      ),
-    );
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
-
-  static const pages = [
-    ExpensePage(),
-    IncomesPage(),
-    BankAccountPage(),
-    CategoriesPage(),
-    SettingsPage(),
-  ];
 }
