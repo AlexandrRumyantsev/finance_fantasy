@@ -47,3 +47,7 @@ devtools_options.yaml
 *.g.dart
 *.freezed.dart
 /ios/Podfile.lock
+
+# FVM Version Cache
+.fvm/
+.fvmrc
