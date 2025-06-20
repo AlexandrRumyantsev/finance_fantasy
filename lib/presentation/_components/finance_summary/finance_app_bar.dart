@@ -1,6 +1,6 @@
 part of '../components.dart';
 
-class CommonFinanceAppBar extends StatelessWidget {
+class CommonFinanceAppBar<C extends BaseSummaryCubit> extends StatelessWidget {
   const CommonFinanceAppBar({
     super.key,
     required this.title,
@@ -10,6 +10,7 @@ class CommonFinanceAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<C>();
     return SliverAppBar(
       pinned: true,
       automaticallyImplyLeading: false,
@@ -26,8 +27,28 @@ class CommonFinanceAppBar extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.more_time_outlined, color: Colors.black),
-          onPressed: () {},
+          icon: SvgPicture.asset(
+            AppIcons.selectPeriod,
+            width: 40,
+            height: 40,
+          ),
+          onPressed: () async {
+            final DateTime? selectedDate = await showDatePicker(
+              context: context,
+              initialDate: cubit.state.dateRange?.end,
+              firstDate: DateTime(2000),
+              lastDate: DateTime.now(),
+              initialEntryMode: DatePickerEntryMode.calendarOnly,
+              builder: (context, child) {
+                return AppDatePickerTheme(
+                  child: child!,
+                );
+              },
+            );
+            if (selectedDate == null) return;
+            cubit.updateSelectedPeriod(
+                DateTimeRange(start: selectedDate, end: selectedDate));
+          },
         ),
       ],
     );

@@ -4,11 +4,7 @@ class ChevronRightPainter extends CustomPainter {
   /// Цвет
   final Color color;
 
-  /// Размер иконки
-  final double sizeIcon;
-
   ChevronRightPainter({
-    this.sizeIcon = 24,
     required this.color,
   });
 

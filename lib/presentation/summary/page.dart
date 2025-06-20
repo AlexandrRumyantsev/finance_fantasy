@@ -15,7 +15,7 @@ class SummaryPage<C extends BaseSummaryCubit> extends StatelessWidget {
         builder: (context, state) {
           return CustomScrollView(
             slivers: [
-              CommonFinanceAppBar(title: title),
+              CommonFinanceAppBar<C>(title: title),
               SliverPersistentHeader(
                 pinned: true,
                 delegate: CommonAmountCardDelegate(amount: state.totalAmount),

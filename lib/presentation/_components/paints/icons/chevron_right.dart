@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../chevron_painter.dart';
+import '../painters/chevron_painter.dart';
 
 class ChevronRight extends StatelessWidget {
   const ChevronRight({
@@ -17,7 +17,7 @@ class ChevronRight extends StatelessWidget {
     return SizedBox(
       width: size,
       height: size,
-      child: CustomPaint(painter: ChevronRightPainter(sizeIcon: size, color: color)),
+      child: CustomPaint(painter: ChevronRightPainter(color: color)),
     );
   }
 }
