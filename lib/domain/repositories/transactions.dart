@@ -1,17 +1,16 @@
 import 'package:finance_fantasy/data/models/request/transaction_request.dart';
-import 'package:finance_fantasy/data/models/shared/transaction.dart';
+import 'package:finance_fantasy/domain/entities/transaction_extended.dart';
 
-import '../../data/models/response/transaction_response.dart';
 import '../../utils/either.dart';
 import '../entities/error.dart';
+import '../entities/transaction_short.dart';
 
-/// TODO: Заменить TransactionDto на Transaction(Entity) когда появится domain слой
 abstract interface class TransactionRepository {
-  Future<Either<BaseError, TransactionDto>> createTransaction(
-    TransactionRequest transaction,
-  );
+  Future<Either<BaseError, TransactionBrief>> createTransaction({
+    required TransactionRequest transaction,
+  });
 
-  Future<Either<BaseError, TransactionResponse>> updateTransaction({
+  Future<Either<BaseError, TransactionExtended>> updateTransaction({
     required TransactionRequest transaction,
     required int transactionId,
   });
@@ -20,11 +19,11 @@ abstract interface class TransactionRepository {
     required int transactionId,
   });
 
-  Future<Either<BaseError, TransactionResponse>> getTransactionById({
+  Future<Either<BaseError, TransactionExtended>> getTransactionById({
     required int transactionId,
   });
 
-  Future<Either<BaseError, List<TransactionResponse>>> getTransactionsByPeriod({
+  Future<Either<BaseError, List<TransactionExtended>>> getTransactionsByPeriod({
     required int accountId,
     DateTime from,
     DateTime to,

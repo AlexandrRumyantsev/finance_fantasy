@@ -1,3 +1,13 @@
+import 'package:finance_fantasy/presentation/_components/paints/icons/chevron_right.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/transaction_extended.dart';
+
 part 'keep_alive_wrapper.dart';
+part 'finance_summary/finance_list_view.dart';
+part 'finance_summary/finance_summary.dart';
+part 'finance_summary/finance_app_bar.dart';
+part 'finance_summary/finance_list_item_wrapper.dart';
+part 'finance_summary/finance_list_item.dart';
+part 'finance_summary/amount_card.dart';
+part 'finance_summary/sliver_amount_card.dart';

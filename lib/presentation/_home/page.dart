@@ -13,8 +13,14 @@ class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
 
   final List<Widget> _pages = [
-    const ExpensePage(),
-    const IncomesPage(),
+    BlocProvider(
+      create: (context) => ExpenseSummaryCubit(),
+      child: const SummaryPage<ExpenseSummaryCubit>(title: 'Расходы сегодня'),
+    ),
+    BlocProvider(
+      create: (context) => IncomesSummaryCubit(),
+      child: const SummaryPage<IncomesSummaryCubit>(title: 'Доходы сегодня'),
+    ),
     const BankAccountPage(),
     const CategoriesPage(),
     const SettingsPage(),
