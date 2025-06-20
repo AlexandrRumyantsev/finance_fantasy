@@ -5,21 +5,17 @@ class AppNavigationBar extends StatelessWidget {
     super.key,
     required int currentPage,
     required ValueChanged<int> onNavBarTap,
-    required this.iconPaths,
-    required this.labels,
   })  : _currentPage = currentPage,
         _onNavBarTap = onNavBarTap;
 
   final int _currentPage;
   final ValueChanged<int> _onNavBarTap;
-  final List<String> iconPaths;
-  final List<String> labels;
 
   @override
   Widget build(BuildContext context) {
     final items = List.generate(
       iconPaths.length,
-          (i) {
+      (i) {
         return Expanded(
           child: GestureDetector(
             onTap: () => _onNavBarTap(i),
@@ -53,4 +49,19 @@ class AppNavigationBar extends StatelessWidget {
       ),
     );
   }
+
+  static const iconPaths = [
+    AppIcons.expense,
+    AppIcons.incomes,
+    AppIcons.bankAccount,
+    AppIcons.categories,
+    AppIcons.settings,
+  ];
+  static const labels = [
+    'Расходы',
+    'Доходы',
+    'Счет',
+    'Статьи',
+    'Настройки',
+  ];
 }

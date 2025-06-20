@@ -7,5 +7,5 @@ class AccountFields {
 
   final String name;
   final String currency;
-  final String balance;
+  final double balance;
 }
