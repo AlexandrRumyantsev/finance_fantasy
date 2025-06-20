@@ -16,8 +16,16 @@ class GetTransactionsByPeriodUseCase
   final TransactionRepository _transactionRepository;
 
   @override
-  FutureOr<Either<BaseError, List<TransactionExtended>>> call(params) {
-    return const Right([]);
+  Future<Either<BaseError, List<TransactionExtended>>> call(params) async {
+    final result = await _transactionRepository.getTransactionsByPeriod(
+      accountId: params.accountId,
+      from: params.from,
+      to: params.to,
+    );
+    return result.fold(
+      (error) => Left(error),
+      (transactions) => Right(transactions),
+    );
   }
 }
 

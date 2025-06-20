@@ -1,4 +1,3 @@
-import 'package:finance_fantasy/presentation/_components/components.dart';
 import 'package:finance_fantasy/presentation/bank_account/bank_account.dart';
 import 'package:finance_fantasy/presentation/categories/categories.dart';
 import 'package:flutter/material.dart';

@@ -18,38 +18,50 @@ class SummaryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        SizedBox(
-          width: 24,
-          height: 24,
-          child: FittedBox(
-            fit: BoxFit.fill,
-            child: Text(emoji),
-          ),
-        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
+          child: Row(
             children: [
-              Text(categoryName),
-              if (comment != null) Text(comment!),
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(emoji, style: const TextStyle(fontSize: 24)),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(categoryName),
+                          if (comment != null)
+                            Text(
+                              comment!,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('$amount $currency'),
+                  const SizedBox(width: 8),
+                  const ChevronRight(
+                    size: 24,
+                    color: Color(0xFF3C434D),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
-        RichText(
-          text: TextSpan(
-            text: amount,
-            children: [
-              TextSpan(text: ' $currency'),
-            ],
-          ),
-        ),
-        const SizedBox(width: 16),
-        const ChevronRight(
-          size: 24,
-          color: Color(0x333C3C434D),
-        ),
+        const CustomDivider(color: Color(0xFFCAC4D0)),
       ],
     );
   }

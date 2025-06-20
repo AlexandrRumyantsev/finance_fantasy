@@ -6,7 +6,7 @@ class CommonAmountCardDelegate extends SliverPersistentHeaderDelegate {
 
   CommonAmountCardDelegate({
     required this.amount,
-    this.currency = '₽',
+    this.currency = 'RUB',
   });
 
   @override

@@ -1,7 +1,10 @@
 part of '../components.dart';
 
 class SummaryListItemWrapper extends StatelessWidget {
-  const SummaryListItemWrapper({super.key, required this.transaction});
+  const SummaryListItemWrapper({
+    super.key,
+    required this.transaction,
+  });
 
   final TransactionExtended transaction;
 
@@ -10,7 +13,7 @@ class SummaryListItemWrapper extends StatelessWidget {
     return SummaryListItem(
       emoji: transaction.category.emoji,
       categoryName: transaction.category.name,
-      amount: transaction.amount.toString(),
+      amount: transaction.amount.formatAmount(),
       comment: transaction.comment,
       currency: transaction.account.currency,
     );

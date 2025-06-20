@@ -33,7 +33,7 @@ Widget _buildContentByStatus(SummaryState state) {
   switch (state.statusPage) {
     case StatusPage.loading:
       return const SliverFillRemaining(
-        child: Center(child: CircularProgressIndicator()),
+        child: Center(child: AppCircularProgressIndicator()),
       );
     case StatusPage.empty:
       return const SliverFillRemaining(

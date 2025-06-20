@@ -4,7 +4,7 @@ class CommonAmountCard extends StatelessWidget {
   const CommonAmountCard({
     super.key,
     required this.amount,
-    this.currency = '₽',
+    required this.currency,
   });
 
   final double amount;
@@ -16,6 +16,11 @@ class CommonAmountCard extends StatelessWidget {
       height: 56,
       decoration: const BoxDecoration(
         color: Color(0xFFD4FAE6),
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xFFCAC4D0),
+          ),
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -25,9 +30,12 @@ class CommonAmountCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Всего', style: TextStyle(fontSize: 16),),
+            const Text(
+              'Всего',
+              style: TextStyle(fontSize: 16),
+            ),
             const SizedBox(width: 16),
-            Text('$amount $currency'),
+            Text('${amount.formatAmount()} $currency'),
           ],
         ),
       ),

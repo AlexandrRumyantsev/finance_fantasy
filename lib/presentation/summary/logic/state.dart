@@ -1,12 +1,13 @@
 part of 'cubit.dart';
 
 /// Состояние страницы сводки доходов\расходов
-class SummaryState extends BasePageState with EquatableMixin {
+class SummaryState with EquatableMixin {
   SummaryState({
-    required super.statusPage,
+    this.statusPage = StatusPage.loading,
     this.transactions,
   });
 
+  final StatusPage statusPage;
   final List<TransactionExtended>? transactions;
 
   SummaryState copyWith({
@@ -19,10 +20,7 @@ class SummaryState extends BasePageState with EquatableMixin {
       );
 
   double get totalAmount =>
-      transactions?.fold(0.0,
-          (previousValue, element) => previousValue ?? 0.0 + element.amount) ??
-      0.0;
-
+      transactions?.fold(0.0, (prev, e) => prev! + e.amount) ?? 0.0;
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [statusPage, transactions];
 }

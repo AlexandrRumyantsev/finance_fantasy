@@ -28,7 +28,7 @@ abstract class TransactionsClient {
   @GET('/transactions/account/{accountId}/period')
   Future<List<TransactionResponse>> getTransactionsByPeriod(
     @Path('accountId') int accountId,
-    @Query('startDate') DateTime? from,
-    @Query('endDate') DateTime? to,
+    @Query('startDate') String? from,
+    @Query('endDate') String? to,
   );
 }
