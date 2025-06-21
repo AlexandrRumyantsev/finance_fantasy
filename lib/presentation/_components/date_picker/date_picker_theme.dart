@@ -42,9 +42,11 @@ class AppDatePickerTheme extends StatelessWidget {
           ),
           rangePickerHeaderForegroundColor: Colors.black,
           cancelButtonStyle: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all(Colors.black)),
+            foregroundColor: WidgetStateProperty.all(Colors.black),
+          ),
           confirmButtonStyle: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all(Colors.black)),
+            foregroundColor: WidgetStateProperty.all(Colors.black),
+          ),
           dayStyle: const TextStyle(
             color: Colors.black,
           ),

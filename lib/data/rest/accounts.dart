@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:finance_fantasy/data/models/response/account_response.dart';
-import 'package:finance_fantasy/data/models/shared/account.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/request/account_create_request.dart';
 import '../models/request/account_update_request.dart';
+import '../models/response/account_response.dart';
+import '../models/shared/account.dart';
 import '../models/shared/account_history.dart';
 
 part 'accounts.g.dart';
@@ -24,7 +24,9 @@ abstract class AccountsClient {
 
   @PUT('/accounts/{id}')
   Future<AccountDto> updateAccount(
-      @Path('id') int id, @Body() AccountUpdateRequest account);
+    @Path('id') int id,
+    @Body() AccountUpdateRequest account,
+  );
 
   @GET('/accounts/{id}')
   Future<AccountResponse> getAccountById(@Path('id') int id);

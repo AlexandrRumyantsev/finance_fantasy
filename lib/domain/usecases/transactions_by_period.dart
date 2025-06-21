@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:finance_fantasy/domain/entities/transaction_extended.dart';
-import 'package:finance_fantasy/domain/usecases/use_case.dart';
-import 'package:finance_fantasy/utils/either.dart';
-
+import '../../utils/either.dart';
 import '../entities/error.dart';
+import '../entities/transaction_extended.dart';
 import '../repositories/transactions.dart';
+import 'use_case.dart';
 
 class GetTransactionsByPeriodUseCase
     implements
@@ -16,15 +15,17 @@ class GetTransactionsByPeriodUseCase
   final TransactionRepository _transactionRepository;
 
   @override
-  Future<Either<BaseError, List<TransactionExtended>>> call(params) async {
+  Future<Either<BaseError, List<TransactionExtended>>> call(
+    GetTransactionsByPeriodUseCaseParams params,
+  ) async {
     final result = await _transactionRepository.getTransactionsByPeriod(
       accountId: params.accountId,
       from: params.from,
       to: params.to,
     );
     return result.fold(
-      (error) => Left(error),
-      (transactions) => Right(transactions),
+      Left.new,
+      Right.new,
     );
   }
 }

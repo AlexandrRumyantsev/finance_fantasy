@@ -39,19 +39,21 @@ Widget _buildContentByStatus(SummaryState state) {
       return const SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
-            child: Text(
-          'Нет данных',
-          style: TextStyle(fontSize: 24),
-        )),
+          child: Text(
+            'Нет данных',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
       );
     case StatusPage.error:
       return const SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
-            child: Text(
-          'Ошибка загрузки',
-          style: TextStyle(fontSize: 24),
-        )),
+          child: Text(
+            'Ошибка загрузки',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
       );
     case StatusPage.data:
       return CommonFinanceList(transactions: state.transactions ?? []);

@@ -10,7 +10,11 @@ class CommonAmountCardDelegate extends SliverPersistentHeaderDelegate {
   });
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return CommonAmountCard(amount: amount, currency: currency);
   }
 

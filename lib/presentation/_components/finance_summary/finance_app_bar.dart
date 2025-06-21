@@ -33,7 +33,7 @@ class CommonFinanceAppBar<C extends BaseSummaryCubit> extends StatelessWidget {
             height: 40,
           ),
           onPressed: () async {
-            final DateTime? selectedDate = await showDatePicker(
+            final selectedDate = await showDatePicker(
               context: context,
               initialDate: cubit.state.dateRange?.end,
               firstDate: DateTime(2000),
@@ -47,7 +47,8 @@ class CommonFinanceAppBar<C extends BaseSummaryCubit> extends StatelessWidget {
             );
             if (selectedDate == null) return;
             cubit.updateSelectedPeriod(
-                DateTimeRange(start: selectedDate, end: selectedDate));
+              DateTimeRange(start: selectedDate, end: selectedDate),
+            );
           },
         ),
       ],

@@ -53,7 +53,6 @@ class SummaryListItem extends StatelessWidget {
                   Text('$amount $currency'),
                   const SizedBox(width: 8),
                   const ChevronRight(
-                    size: 24,
                     color: Color(0xFF3C434D),
                   ),
                 ],

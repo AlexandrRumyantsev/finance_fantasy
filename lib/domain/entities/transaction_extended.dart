@@ -1,4 +1,4 @@
-import 'package:finance_fantasy/domain/entities/account_brief.dart';
+import 'account_brief.dart';
 
 import 'base_transaction.dart';
 import 'category.dart';
@@ -10,9 +10,9 @@ class TransactionExtended extends TransactionBase {
     required super.transactionDate,
     required super.createdAt,
     required super.updatedAt,
-    super.comment,
     required this.account,
     required this.category,
+    super.comment,
   });
 
   final AccountBrief account;
