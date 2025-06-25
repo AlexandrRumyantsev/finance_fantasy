@@ -7,4 +7,5 @@ class AppIcons {
   static const String expense = '$_iconPrefix/expense.svg';
   static const String settings = '$_iconPrefix/settings.svg';
   static const String selectPeriod = '$_iconPrefix/select_period.svg';
+  static const String history = '$_iconPrefix/history_transactions.svg';
 }

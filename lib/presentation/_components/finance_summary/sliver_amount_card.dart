@@ -1,13 +1,15 @@
 part of '../components.dart';
 
-class CommonAmountCardDelegate extends SliverPersistentHeaderDelegate {
-  final double amount;
-  final String currency;
-
-  CommonAmountCardDelegate({
-    required this.amount,
-    this.currency = 'RUB',
+class CommonSummaryHeaderCardDelegate extends SliverPersistentHeaderDelegate {
+  const CommonSummaryHeaderCardDelegate({
+    required this.left,
+    required this.right,
+    this.onTap,
   });
+
+  final String left;
+  final String right;
+  final VoidCallback? onTap;
 
   @override
   Widget build(
@@ -15,7 +17,10 @@ class CommonAmountCardDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return CommonAmountCard(amount: amount, currency: currency);
+    return GestureDetector(
+      onTap: onTap,
+      child: CommonSummaryHeaderCard(left: left, right: right),
+    );
   }
 
   @override
@@ -25,7 +30,7 @@ class CommonAmountCardDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 56;
 
   @override
-  bool shouldRebuild(covariant CommonAmountCardDelegate oldDelegate) {
-    return amount != oldDelegate.amount || currency != oldDelegate.currency;
+  bool shouldRebuild(covariant CommonSummaryHeaderCardDelegate oldDelegate) {
+    return left != oldDelegate.left || right != oldDelegate.right;
   }
 }

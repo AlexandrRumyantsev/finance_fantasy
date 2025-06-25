@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../domain/entities/transaction_extended.dart';
-import '../../utils/icons.dart';
 import '../../utils/num.dart';
-import '../summary/logic/cubit.dart';
-import 'date_picker/date_picker_theme.dart';
 import 'paints/icons/chevron_right.dart';
 
 part 'custom_circular_indicator.dart';

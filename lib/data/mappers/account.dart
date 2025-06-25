@@ -39,5 +39,3 @@ extension AccountDtoMapping on AccountDto {
         updatedDate: updatedAt,
       );
 }
-
-

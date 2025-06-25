@@ -11,28 +11,43 @@ import '../../../domain/usecases/transactions_by_period.dart';
 part 'state.dart';
 
 abstract class BaseSummaryCubit extends Cubit<SummaryState> {
-  BaseSummaryCubit() : super(const SummaryState()) {
-    initState();
-    loadData();
-  }
+  BaseSummaryCubit() : super(const SummaryState());
 
   /// TODO: организовать DI
   final GetTransactionsByPeriodUseCase _getTransactionsByPeriodUseCase =
       GetTransactionsByPeriodUseCase(
     TransactionsApiRepository(),
-    BankAccountApiRepository()
+    BankAccountApiRepository(),
   );
 
-  void initState() {
+  void initState({DateTimeRange? dateRange}) {
     final today = DateTime.now();
-    final monthAgo = DateTime(today.year, today.month - 1, today.day);
     emit(
       state.copyWith(
         statusPage: StatusPage.loading,
         transactions: [],
-        dateRange: DateTimeRange(start: monthAgo, end: today),
+        dateRange: dateRange ?? DateTimeRange(start: today, end: today),
       ),
     );
+  }
+
+  void setDateRange({
+    DateTime? from,
+    DateTime? to,
+  }) {
+    final currentRange = state.dateRange ??
+        DateTimeRange(start: DateTime.now(), end: DateTime.now());
+    final start = from ?? currentRange.start;
+    final end = to ?? currentRange.end;
+
+    DateTimeRange newRange;
+    if (start.isAfter(end)) {
+      newRange = DateTimeRange(start: end, end: start);
+    } else {
+      newRange = DateTimeRange(start: start, end: end);
+    }
+    emit(state.copyWith(dateRange: newRange));
+    loadData();
   }
 
   Future<void> loadData() async {
