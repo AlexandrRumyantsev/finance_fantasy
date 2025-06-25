@@ -1,16 +1,24 @@
 part of '../components.dart';
 
-class CommonFinanceAppBar<C extends BaseSummaryCubit> extends StatelessWidget {
+class CommonFinanceAppBar extends StatelessWidget {
   const CommonFinanceAppBar({
     super.key,
     required this.title,
+    this.suffix,
+    this.prefix,
+    this.onSuffixPressed,
+    this.onPrefixPressed,
   });
 
   final String title;
+  final Widget? suffix;
+  final Widget? prefix;
+  final VoidCallback? onSuffixPressed;
+  final VoidCallback? onPrefixPressed;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<C>();
+    final suffix = this.suffix;
     return SliverAppBar(
       pinned: true,
       automaticallyImplyLeading: false,
@@ -25,31 +33,16 @@ class CommonFinanceAppBar<C extends BaseSummaryCubit> extends StatelessWidget {
         title,
         style: const TextStyle(color: Colors.black),
       ),
+      leading: GestureDetector(
+        onTap: onPrefixPressed,
+        child: prefix,
+      ),
       actions: [
-        IconButton(
-          icon: SvgPicture.asset(
-            AppIcons.selectPeriod,
-            width: 40,
-            height: 40,
+        if (suffix != null)
+          GestureDetector(
+            onTap: onSuffixPressed,
+            child: suffix,
           ),
-          onPressed: () async {
-            final DateTime? selectedDate = await showDatePicker(
-              context: context,
-              initialDate: cubit.state.dateRange?.end,
-              firstDate: DateTime(2000),
-              lastDate: DateTime.now(),
-              initialEntryMode: DatePickerEntryMode.calendarOnly,
-              builder: (context, child) {
-                return AppDatePickerTheme(
-                  child: child!,
-                );
-              },
-            );
-            if (selectedDate == null) return;
-            cubit.updateSelectedPeriod(
-                DateTimeRange(start: selectedDate, end: selectedDate));
-          },
-        ),
       ],
     );
   }

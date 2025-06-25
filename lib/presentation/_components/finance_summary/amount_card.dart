@@ -1,14 +1,14 @@
 part of '../components.dart';
 
-class CommonAmountCard extends StatelessWidget {
-  const CommonAmountCard({
+class CommonSummaryHeaderCard extends StatelessWidget {
+  const CommonSummaryHeaderCard({
     super.key,
-    required this.amount,
-    required this.currency,
+    required this.left,
+    required this.right,
   });
 
-  final double amount;
-  final String currency;
+  final String left;
+  final String right;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,12 @@ class CommonAmountCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Всего',
-              style: TextStyle(fontSize: 16),
+            Text(
+              left,
+              style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(width: 16),
-            Text('${amount.formatAmount()} $currency'),
+            Text(right),
           ],
         ),
       ),

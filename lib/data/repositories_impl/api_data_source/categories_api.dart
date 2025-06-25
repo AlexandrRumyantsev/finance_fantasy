@@ -1,10 +1,7 @@
-import 'package:finance_fantasy/domain/entities/category.dart';
-
-import 'package:finance_fantasy/domain/entities/error.dart';
-
-import 'package:finance_fantasy/utils/either.dart';
-
+import '../../../domain/entities/category.dart';
+import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/categories.dart';
+import '../../../utils/either.dart';
 
 class CategoriesApiRepository implements CategoriesRepository {
   @override

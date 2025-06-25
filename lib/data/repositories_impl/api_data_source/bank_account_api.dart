@@ -1,17 +1,19 @@
-import 'package:finance_fantasy/data/models/request/account_create_request.dart';
-
-import 'package:finance_fantasy/data/models/request/account_update_request.dart';
-
-import 'package:finance_fantasy/data/models/response/account_history_response.dart';
-import 'package:finance_fantasy/domain/entities/account_extended.dart';
-
-import 'package:finance_fantasy/domain/entities/error.dart';
-
-import 'package:finance_fantasy/utils/either.dart';
-
+import '../../../domain/entities/account_extended.dart';
+import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/bank_account.dart';
+import '../../../infrastructure/base/api.dart';
+import '../../../utils/either.dart';
+import '../../mappers/account.dart';
+import '../../models/request/account_create_request.dart';
+import '../../models/request/account_update_request.dart';
+import '../../models/response/account_history_response.dart';
+import '../../rest/accounts.dart';
 
 class BankAccountApiRepository implements BankAccountRepository {
+  BankAccountApiRepository();
+
+  final _client = AccountsClient(API.dio);
+
   @override
   Future<Either<BaseError, AccountExtended>> createBankAccount({
     required AccountCreateRequest account,
@@ -37,9 +39,13 @@ class BankAccountApiRepository implements BankAccountRepository {
   }
 
   @override
-  Future<Either<BaseError, List<AccountExtended>>> getBankAccounts() {
-    // TODO: implement getBankAccounts
-    throw UnimplementedError();
+  Future<Either<BaseError, List<AccountExtended>>> getBankAccounts() async {
+    try {
+      final response =  await _client.getAccounts();
+      return Right(response.map((e) => e.toDomainExtended()).toList());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override

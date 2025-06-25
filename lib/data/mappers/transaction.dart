@@ -1,10 +1,9 @@
-import 'package:finance_fantasy/data/mappers/account_brief.dart';
-import 'package:finance_fantasy/data/mappers/category.dart';
-import 'package:finance_fantasy/data/models/response/transaction_response.dart';
-import 'package:finance_fantasy/domain/entities/transaction_short.dart';
-
 import '../../domain/entities/transaction_extended.dart';
+import '../../domain/entities/transaction_short.dart';
+import '../models/response/transaction_response.dart';
 import '../models/shared/transaction.dart';
+import 'account.dart';
+import 'category.dart';
 
 extension TransactionMapping on TransactionExtended {
   TransactionDto toDto() => TransactionDto(

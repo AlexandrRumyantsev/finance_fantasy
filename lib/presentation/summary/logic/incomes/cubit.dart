@@ -1,4 +1,4 @@
-import 'package:finance_fantasy/domain/entities/transaction_extended.dart';
+import '../../../../domain/entities/transaction_extended.dart';
 
 import '../cubit.dart';
 

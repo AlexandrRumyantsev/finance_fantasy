@@ -1,8 +1,8 @@
-import 'package:finance_fantasy/data/models/shared/stat_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'account_response.freezed.dart';
+import '../shared/stat_item.dart';
 
+part 'account_response.freezed.dart';
 part 'account_response.g.dart';
 
 @freezed

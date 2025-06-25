@@ -1,42 +1,55 @@
 import 'dart:async';
 
-import 'package:finance_fantasy/domain/entities/transaction_extended.dart';
-import 'package:finance_fantasy/domain/usecases/use_case.dart';
-import 'package:finance_fantasy/utils/either.dart';
-
+import '../../utils/either.dart';
 import '../entities/error.dart';
+import '../entities/transaction_extended.dart';
+import '../repositories/bank_account.dart';
 import '../repositories/transactions.dart';
+import 'use_case.dart';
 
 class GetTransactionsByPeriodUseCase
     implements
         UseCase<BaseError, List<TransactionExtended>,
             GetTransactionsByPeriodUseCaseParams> {
-  const GetTransactionsByPeriodUseCase(this._transactionRepository);
+  const GetTransactionsByPeriodUseCase(
+    this._transactionRepository,
+    this._bankAccountRepository,
+  );
 
   final TransactionRepository _transactionRepository;
+  final BankAccountRepository _bankAccountRepository;
 
   @override
-  Future<Either<BaseError, List<TransactionExtended>>> call(params) async {
+  Future<Either<BaseError, List<TransactionExtended>>> call(
+    GetTransactionsByPeriodUseCaseParams params,
+  ) async {
+    final bankAccountsResponse = await _bankAccountRepository.getBankAccounts();
+    if (bankAccountsResponse.isLeft) {
+      return Left(bankAccountsResponse.asLeft?.value ?? BaseError.unknown());
+    }
+    final bankAccounts = bankAccountsResponse.asRight;
+    late int accountId;
+    if (bankAccounts != null && bankAccounts.value.isNotEmpty) {
+      accountId = bankAccounts.value.first.id;
+    }
     final result = await _transactionRepository.getTransactionsByPeriod(
-      accountId: params.accountId,
+      accountId: accountId,
       from: params.from,
       to: params.to,
     );
     return result.fold(
-      (error) => Left(error),
-      (transactions) => Right(transactions),
+      Left.new,
+      Right.new,
     );
   }
 }
 
 class GetTransactionsByPeriodUseCaseParams {
   const GetTransactionsByPeriodUseCaseParams({
-    required this.accountId,
     this.from,
     this.to,
   });
 
-  final int accountId;
   final DateTime? from;
   final DateTime? to;
 }

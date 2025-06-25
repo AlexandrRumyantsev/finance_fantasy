@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:finance_fantasy/data/models/shared/category.dart';
 import 'package:retrofit/retrofit.dart';
+
+import '../models/shared/category.dart';
 
 part 'categories.g.dart';
 

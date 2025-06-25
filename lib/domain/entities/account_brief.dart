@@ -1,4 +1,4 @@
-import 'package:finance_fantasy/domain/entities/account_fields.dart';
+import 'account_fields.dart';
 
 class AccountBrief extends AccountFields {
   AccountBrief({

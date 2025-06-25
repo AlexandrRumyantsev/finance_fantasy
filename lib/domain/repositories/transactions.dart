@@ -1,8 +1,7 @@
-import 'package:finance_fantasy/data/models/request/transaction_request.dart';
-import 'package:finance_fantasy/domain/entities/transaction_extended.dart';
-
+import '../../data/models/request/transaction_request.dart';
 import '../../utils/either.dart';
 import '../entities/error.dart';
+import '../entities/transaction_extended.dart';
 import '../entities/transaction_short.dart';
 
 abstract interface class TransactionRepository {

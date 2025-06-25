@@ -1,4 +1,4 @@
-import 'package:finance_fantasy/utils/either.dart';
+import '../../utils/either.dart';
 
 import '../entities/category.dart';
 import '../entities/error.dart';

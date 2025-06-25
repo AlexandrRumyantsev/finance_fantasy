@@ -1,45 +1,59 @@
 import 'package:equatable/equatable.dart';
-import 'package:finance_fantasy/domain/entities/transaction_extended.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/repositories_impl/api_data_source/bank_account_api.dart';
 import '../../../data/repositories_impl/api_data_source/transactions_api.dart';
 import '../../../domain/entities/status_page.dart';
+import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/usecases/transactions_by_period.dart';
 
 part 'state.dart';
 
 abstract class BaseSummaryCubit extends Cubit<SummaryState> {
-  BaseSummaryCubit() : super(SummaryState()) {
-    initState();
-    loadData();
-  }
+  BaseSummaryCubit() : super(const SummaryState());
 
   /// TODO: организовать DI
   final GetTransactionsByPeriodUseCase _getTransactionsByPeriodUseCase =
       GetTransactionsByPeriodUseCase(
     TransactionsApiRepository(),
+    BankAccountApiRepository(),
   );
 
-  void initState() {
+  void initState({DateTimeRange? dateRange}) {
     final today = DateTime.now();
-    final monthAgo = DateTime(today.year, today.month - 1, today.day);
-    emit(state.copyWith(
-      statusPage: StatusPage.loading,
-      transactions: [],
-      dateRange: DateTimeRange(start: monthAgo, end: today),
-    ));
+    emit(
+      state.copyWith(
+        statusPage: StatusPage.loading,
+        transactions: [],
+        dateRange: dateRange ?? DateTimeRange(start: today, end: today),
+      ),
+    );
+  }
+
+  void setDateRange({
+    DateTime? from,
+    DateTime? to,
+  }) {
+    final currentRange = state.dateRange ??
+        DateTimeRange(start: DateTime.now(), end: DateTime.now());
+    final start = from ?? currentRange.start;
+    final end = to ?? currentRange.end;
+
+    DateTimeRange newRange;
+    if (start.isAfter(end)) {
+      newRange = DateTimeRange(start: end, end: start);
+    } else {
+      newRange = DateTimeRange(start: start, end: end);
+    }
+    emit(state.copyWith(dateRange: newRange));
+    loadData();
   }
 
   Future<void> loadData() async {
     emit(state.copyWith(statusPage: StatusPage.loading));
-
-    /// слишком быстро грузятся списки, покрутим лоадер:)
-    await Future.delayed(const Duration(seconds: 2));
     final transactions = await _getTransactionsByPeriodUseCase(
-      /// TODO: брать параметры из календаря, а accountId из локальной бд
       GetTransactionsByPeriodUseCaseParams(
-        accountId: 148,
         from: state.dateRange?.start,
         to: state.dateRange?.end,
       ),
