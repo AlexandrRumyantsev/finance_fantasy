@@ -2,7 +2,7 @@ import '../../domain/entities/transaction_extended.dart';
 import '../../domain/entities/transaction_short.dart';
 import '../models/response/transaction_response.dart';
 import '../models/shared/transaction.dart';
-import 'account_brief.dart';
+import 'account.dart';
 import 'category.dart';
 
 extension TransactionMapping on TransactionExtended {

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/repositories_impl/api_data_source/bank_account_api.dart';
 import '../../../data/repositories_impl/api_data_source/transactions_api.dart';
 import '../../../domain/entities/status_page.dart';
 import '../../../domain/entities/transaction_extended.dart';
@@ -19,6 +20,7 @@ abstract class BaseSummaryCubit extends Cubit<SummaryState> {
   final GetTransactionsByPeriodUseCase _getTransactionsByPeriodUseCase =
       GetTransactionsByPeriodUseCase(
     TransactionsApiRepository(),
+    BankAccountApiRepository()
   );
 
   void initState() {
@@ -36,9 +38,7 @@ abstract class BaseSummaryCubit extends Cubit<SummaryState> {
   Future<void> loadData() async {
     emit(state.copyWith(statusPage: StatusPage.loading));
     final transactions = await _getTransactionsByPeriodUseCase(
-      /// TODO: брать параметры из календаря, а accountId из локальной бд
       GetTransactionsByPeriodUseCaseParams(
-        accountId: 148,
         from: state.dateRange?.start,
         to: state.dateRange?.end,
       ),
