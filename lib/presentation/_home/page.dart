@@ -1,7 +1,5 @@
 part of 'home.dart';
 
-// import '../summary/summary_tab_navigator.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -17,12 +15,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: IndexedStack(
         index: _currentPage,
-        children: [
-          const SummaryTabNavigator(isExpense: true),
-          const SummaryTabNavigator(isExpense: false),
-          const BankAccountPage(),
-          const CategoriesPage(),
-          const SettingsPage(),
+        children: const [
+          SummaryTabNavigator(isExpense: true),
+          SummaryTabNavigator(isExpense: false),
+          BankAccountPage(),
+          CategoriesPage(),
+          SettingsPage(),
         ],
       ),
       bottomNavigationBar: AppNavigationBar(

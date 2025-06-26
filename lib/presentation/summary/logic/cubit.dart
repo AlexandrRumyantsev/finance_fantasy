@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/repositories_impl/api_data_source/bank_account_api.dart';
 import '../../../data/repositories_impl/api_data_source/transactions_api.dart';
+import '../../../di/service_locator.dart';
 import '../../../domain/entities/status_page.dart';
 import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/usecases/transactions_by_period.dart';
@@ -11,14 +12,11 @@ import '../../../domain/usecases/transactions_by_period.dart';
 part 'state.dart';
 
 abstract class BaseSummaryCubit extends Cubit<SummaryState> {
-  BaseSummaryCubit() : super(const SummaryState());
+  BaseSummaryCubit(this._getTransactionsByPeriodUseCase)
+      : super(const SummaryState());
 
   /// TODO: организовать DI
-  final GetTransactionsByPeriodUseCase _getTransactionsByPeriodUseCase =
-      GetTransactionsByPeriodUseCase(
-    TransactionsApiRepository(),
-    BankAccountApiRepository(),
-  );
+  final GetTransactionsByPeriodUseCase _getTransactionsByPeriodUseCase;
 
   void initState({DateTimeRange? dateRange}) {
     final today = DateTime.now();

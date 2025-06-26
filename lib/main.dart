@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'presentation/_home/home.dart';
+import 'di/injection.dart';
 
 /// Entry point of the application
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
+  configureDependencies();
   runApp(const MyApp());
 }
 

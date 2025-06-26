@@ -1,26 +1,34 @@
-import 'package:intl/intl.dart';
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:finance_fantasy/data/data_source/database/database.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/error.dart';
 import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/entities/transaction_short.dart';
 import '../../../domain/repositories/transactions.dart';
-import '../../../infrastructure/base/api.dart';
 import '../../../utils/either.dart';
-import '../../mappers/transaction.dart';
 import '../../models/request/transaction_request.dart';
-import '../../data_source/rest/transactions.dart';
 
 @injectable
-class TransactionsApiRepository implements TransactionRepository {
-  final _client = TransactionsClient(API.dio);
+class TransactionDatabaseRepository implements TransactionRepository {
+  final AppDatabase _database;
+
+  TransactionDatabaseRepository(this._database);
 
   @override
   Future<Either<BaseError, TransactionBrief>> createTransaction({
     required TransactionRequest transaction,
   }) {
-    // TODO: implement createTransaction
-    throw UnimplementedError();
+    return Future.value(Right(TransactionBrief(
+      id: 0,
+      amount: double.parse(transaction.amount),
+      categoryId: transaction.categoryId,
+      accountId: transaction.accountId,
+      transactionDate: transaction.transactionDate,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    )));
   }
 
   @override
@@ -44,20 +52,9 @@ class TransactionsApiRepository implements TransactionRepository {
     required int accountId,
     DateTime? from,
     DateTime? to,
-  }) async {
-    try {
-      final formatter = DateFormat('yyyy-MM-dd');
-      final fromDate = from != null ? formatter.format(from) : null;
-      final toDate = to != null ? formatter.format(to) : null;
-      final response = await _client.getTransactionsByPeriod(
-        accountId,
-        fromDate,
-        toDate,
-      );
-      return Right(response.map((e) => e.toDomain()).toList());
-    } catch (e) {
-      return Left(BaseError(message: e.toString()));
-    }
+  }) {
+    // TODO: implement getTransactionsByPeriod
+    throw UnimplementedError();
   }
 
   @override

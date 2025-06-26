@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../di/injection.dart' as ServiceLocator;
+import '../../domain/usecases/transactions_by_period.dart';
 import '../history/history.dart';
 import 'logic/cubit.dart';
 import 'logic/expense/cubit.dart';
@@ -22,15 +24,26 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
               create: (context) =>
-                  isExpense ? ExpenseSummaryCubit() : IncomesSummaryCubit(),
-              child: HistoryPage<C>(),
+                  isExpense
+                      ? ExpenseSummaryCubit(
+                          ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
+                        )
+                      : IncomesSummaryCubit(
+                          ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
+                        ),
+                child: HistoryPage<C>(),
             ),
           );
         }
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) =>
-                isExpense ? ExpenseSummaryCubit() : IncomesSummaryCubit(),
+            create: (context) => isExpense
+                ? ExpenseSummaryCubit(
+                    ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
+                  )
+                : IncomesSummaryCubit(
+                    ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
+                  ),
             child: SummaryPage<C>(
               title: isExpense ? 'Расходы сегодня' : 'Доходы сегодня',
               onSuffixPressed: () {

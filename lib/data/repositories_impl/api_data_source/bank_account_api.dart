@@ -7,12 +7,13 @@ import '../../mappers/account.dart';
 import '../../models/request/account_create_request.dart';
 import '../../models/request/account_update_request.dart';
 import '../../models/response/account_history_response.dart';
-import '../../rest/accounts.dart';
+import '../../data_source/rest/accounts.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class BankAccountApiRepository implements BankAccountRepository {
-  BankAccountApiRepository();
-
-  final _client = AccountsClient(API.dio);
+  BankAccountApiRepository(this._client);
+  final AccountsClient _client;
 
   @override
   Future<Either<BaseError, AccountExtended>> createBankAccount({
@@ -41,7 +42,7 @@ class BankAccountApiRepository implements BankAccountRepository {
   @override
   Future<Either<BaseError, List<AccountExtended>>> getBankAccounts() async {
     try {
-      final response =  await _client.getAccounts();
+      final response = await _client.getAccounts();
       return Right(response.map((e) => e.toDomainExtended()).toList());
     } catch (e) {
       return Left(BaseError(message: e.toString()));

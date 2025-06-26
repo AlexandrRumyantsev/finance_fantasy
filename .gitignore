@@ -46,6 +46,7 @@ pubspec.lock
 devtools_options.yaml
 *.g.dart
 *.freezed.dart
+*.config.dart
 /ios/Podfile.lock
 
 # FVM Version Cache

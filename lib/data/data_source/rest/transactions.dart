@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../models/request/transaction_request.dart';
-import '../models/response/transaction_response.dart';
-import '../models/shared/transaction.dart';
+import '../../models/request/transaction_request.dart';
+import '../../models/response/transaction_response.dart';
+import '../../models/shared/transaction.dart';
 
 part 'transactions.g.dart';
 
