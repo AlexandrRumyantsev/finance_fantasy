@@ -18,6 +18,7 @@ class CommonFinanceAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     final suffix = this.suffix;
     return SliverAppBar(
       pinned: true,
@@ -25,13 +26,13 @@ class CommonFinanceAppBar extends StatelessWidget {
       expandedHeight: 64,
       collapsedHeight: 64,
       centerTitle: true,
-      backgroundColor: const Color(0xFF2AE881),
+      backgroundColor: appColors.primary,
       elevation: 0,
       shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(color: appColors.text),
       ),
       leading: GestureDetector(
         onTap: onPrefixPressed,

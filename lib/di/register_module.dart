@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:drift/native.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/data_source/database/database.dart';
 import '../infrastructure/base/api.dart';
+import '../infrastructure/managers/shared_prefs.dart';
+import '../utils/theme_provider.dart';
+import 'injection.dart';
 
 @module
 abstract class RegisterModule {
@@ -12,4 +16,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   Dio get dio => API.dio;
+
+  @preResolve
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 }

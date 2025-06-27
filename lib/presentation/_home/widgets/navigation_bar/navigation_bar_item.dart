@@ -14,6 +14,7 @@ class NavigationBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     final fontWeight = isSelected ? FontWeight.w600 : FontWeight.w500;
     return ConstrainedBox(
       constraints: const BoxConstraints(maxHeight: 80),
@@ -25,13 +26,27 @@ class NavigationBarItem extends StatelessWidget {
             child: AnimatedContainer(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color:
-                    isSelected ? const Color(0xFFD4FAE6) : Colors.transparent,
+                color: isSelected ? appColors.secondary : Colors.transparent,
               ),
               duration: isSelected
                   ? const Duration(milliseconds: 300)
                   : Duration.zero,
-              child: _buildIcon(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 4,
+                  horizontal: 20,
+                ),
+                child: SvgPicture.asset(
+                  assetPath,
+                  fit: BoxFit.fill,
+                  colorFilter: ColorFilter.mode(
+                    isSelected
+                        ? appColors.primary
+                        : appColors.unselectedButtonNavBar,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 4),
@@ -43,22 +58,6 @@ class NavigationBarItem extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildIcon() {
-    final color =
-        isSelected ? const Color(0xFF2AE881) : const Color(0xFF49454F);
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 20,
-      ),
-      child: SvgPicture.asset(
-        assetPath,
-        fit: BoxFit.fill,
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
       ),
     );
   }

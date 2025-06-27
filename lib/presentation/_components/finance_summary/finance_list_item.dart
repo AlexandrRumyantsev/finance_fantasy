@@ -18,6 +18,7 @@ class SummaryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Column(
       children: [
         Padding(
@@ -52,15 +53,15 @@ class SummaryListItem extends StatelessWidget {
                 children: [
                   Text('$amount $currency'),
                   const SizedBox(width: 8),
-                  const ChevronRight(
-                    color: Color(0xFF3C434D),
+                  ChevronRight(
+                    color: appColors.chevronRight,
                   ),
                 ],
               ),
             ],
           ),
         ),
-        const CustomDivider(color: Color(0xFFCAC4D0)),
+        CustomDivider(color: appColors.divider),
       ],
     );
   }

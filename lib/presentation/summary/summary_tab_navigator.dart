@@ -23,15 +23,14 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
         if (settings.name == '/history') {
           return MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) =>
-                  isExpense
-                      ? ExpenseSummaryCubit(
-                          ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
-                        )
-                      : IncomesSummaryCubit(
-                          ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
-                        ),
-                child: HistoryPage<C>(),
+              create: (context) => isExpense
+                  ? ExpenseSummaryCubit(
+                      ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
+                    )
+                  : IncomesSummaryCubit(
+                      ServiceLocator.getIt<GetTransactionsByPeriodUseCase>(),
+                    ),
+              child: HistoryPage<C>(),
             ),
           );
         }

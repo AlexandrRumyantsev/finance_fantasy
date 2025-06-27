@@ -51,6 +51,9 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                       firstDate: DateTime(2000),
                       lastDate: DateTime.now(),
                       initialDate: state.dateRange?.start ?? DateTime.now(),
+                      builder: (context, child) {
+                        return AppDatePickerTheme(child: child!);
+                      },
                     );
                     if (date != null) {
                       cubit.setDateRange(from: date);
@@ -71,6 +74,9 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                       firstDate: DateTime(2000),
                       lastDate: DateTime.now(),
                       initialDate: state.dateRange?.end ?? DateTime.now(),
+                      builder: (context, child) {
+                        return AppDatePickerTheme(child: child!);
+                      },
                     );
                     if (date != null) {
                       cubit.setDateRange(to: date);
@@ -85,23 +91,10 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                   right: '${state.totalAmount} RUB',
                 ),
               ),
-              switch (state.statusPage) {
-                StatusPage.loading => const SliverFillRemaining(
-                    child: Center(child: AppCircularProgressIndicator()),
-                  ),
-                StatusPage.empty => const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child:
-                        Center(child: Text('Нет данных за выбранный период')),
-                  ),
-                StatusPage.error => const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(child: Text('Ошибка загрузки')),
-                  ),
-                StatusPage.data => CommonFinanceList(
-                    transactions: state.transactions ?? [],
-                  ),
-              },
+              CommonFinanceList(
+                transactions: state.transactions ?? [],
+                statusPage: state.statusPage,
+              ),
             ],
           );
         },

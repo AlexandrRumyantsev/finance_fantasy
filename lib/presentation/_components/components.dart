@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/status_page.dart';
 import '../../domain/entities/transaction_extended.dart';
+import '../../utils/colors.dart';
 import '../../utils/num.dart';
 import 'paints/icons/chevron_right.dart';
 

@@ -12,13 +12,14 @@ class CommonSummaryHeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Container(
       height: 56,
-      decoration: const BoxDecoration(
-        color: Color(0xFFD4FAE6),
+      decoration: BoxDecoration(
+        color: appColors.secondary,
         border: Border(
           bottom: BorderSide(
-            color: Color(0xFFCAC4D0),
+            color: appColors.divider,
           ),
         ),
       ),

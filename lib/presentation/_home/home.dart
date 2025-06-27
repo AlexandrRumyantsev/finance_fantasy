@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../utils/colors.dart';
 import '../../utils/icons.dart';
 import '../bank_account/bank_account.dart';
 import '../categories/categories.dart';
