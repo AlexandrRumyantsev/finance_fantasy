@@ -2,9 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/repositories_impl/api_data_source/bank_account_api.dart';
-import '../../../data/repositories_impl/api_data_source/transactions_api.dart';
-import '../../../di/service_locator.dart';
 import '../../../domain/entities/status_page.dart';
 import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/usecases/transactions_by_period.dart';

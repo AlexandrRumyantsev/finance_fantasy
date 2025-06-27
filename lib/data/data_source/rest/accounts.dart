@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../models/request/account_create_request.dart';
@@ -9,8 +10,10 @@ import '../../models/shared/account_history.dart';
 
 part 'accounts.g.dart';
 
+@injectable
 @RestApi()
 abstract class AccountsClient {
+  @factoryMethod
   factory AccountsClient(Dio dio) => _AccountsClient(dio);
 
   @GET('/accounts')

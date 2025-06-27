@@ -1,18 +1,15 @@
-import '../../../domain/entities/account_extended.dart';
-import '../../../domain/entities/error.dart';
-import '../../../domain/repositories/bank_account.dart';
-import '../../../infrastructure/base/api.dart';
-import '../../../utils/either.dart';
-import '../../mappers/account.dart';
-import '../../models/request/account_create_request.dart';
-import '../../models/request/account_update_request.dart';
-import '../../models/response/account_history_response.dart';
-import '../../data_source/rest/accounts.dart';
-import 'package:injectable/injectable.dart';
+import '../../domain/entities/account_extended.dart';
+import '../../domain/entities/error.dart';
+import '../../domain/repositories/bank_account.dart';
+import '../../utils/either.dart';
+import '../data_source/rest/accounts.dart';
+import '../mappers/account.dart';
+import '../models/request/account_create_request.dart';
+import '../models/request/account_update_request.dart';
+import '../models/response/account_history_response.dart';
 
-@injectable
-class BankAccountApiRepository implements BankAccountRepository {
-  BankAccountApiRepository(this._client);
+class BankAccountRepositoryImpl implements BankAccountRepository {
+  BankAccountRepositoryImpl(this._client);
   final AccountsClient _client;
 
   @override

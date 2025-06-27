@@ -48,9 +48,11 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                     child: Center(child: AppCircularProgressIndicator()),
                   ),
                 StatusPage.empty => const SliverFillRemaining(
+                    hasScrollBody: false,
                     child: Center(child: Text('Нет данных')),
                   ),
                 StatusPage.error => const SliverFillRemaining(
+                    hasScrollBody: false,
                     child: Center(child: Text('Ошибка загрузки')),
                   ),
                 StatusPage.data => CommonFinanceList(

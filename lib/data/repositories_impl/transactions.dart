@@ -1,34 +1,26 @@
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:finance_fantasy/data/data_source/database/database.dart';
-import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 import '../../../domain/entities/error.dart';
 import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/entities/transaction_short.dart';
 import '../../../domain/repositories/transactions.dart';
 import '../../../utils/either.dart';
-import '../../models/request/transaction_request.dart';
+import '../data_source/rest/transactions.dart';
+import '../mappers/transaction.dart';
+import '../models/request/transaction_request.dart';
 
-@injectable
-class TransactionDatabaseRepository implements TransactionRepository {
-  final AppDatabase _database;
 
-  TransactionDatabaseRepository(this._database);
+class TransactionRepositoryImpl implements TransactionRepository {
+  TransactionRepositoryImpl(this._client);
+
+  final TransactionsClient _client;
 
   @override
   Future<Either<BaseError, TransactionBrief>> createTransaction({
     required TransactionRequest transaction,
   }) {
-    return Future.value(Right(TransactionBrief(
-      id: 0,
-      amount: double.parse(transaction.amount),
-      categoryId: transaction.categoryId,
-      accountId: transaction.accountId,
-      transactionDate: transaction.transactionDate,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    )));
+    // TODO: implement createTransaction
+    throw UnimplementedError();
   }
 
   @override
@@ -52,9 +44,20 @@ class TransactionDatabaseRepository implements TransactionRepository {
     required int accountId,
     DateTime? from,
     DateTime? to,
-  }) {
-    // TODO: implement getTransactionsByPeriod
-    throw UnimplementedError();
+  }) async {
+    try {
+      final formatter = DateFormat('yyyy-MM-dd');
+      final fromDate = from != null ? formatter.format(from) : null;
+      final toDate = to != null ? formatter.format(to) : null;
+      final response = await _client.getTransactionsByPeriod(
+        accountId,
+        fromDate,
+        toDate,
+      );
+      return Right(response.map((e) => e.toDomain()).toList());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override

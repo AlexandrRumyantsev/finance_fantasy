@@ -1,14 +1,12 @@
-import 'package:injectable/injectable.dart';
-
 import '../../../domain/entities/category.dart';
 import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/categories.dart';
 import '../../../utils/either.dart';
-import '../../data_source/rest/categories.dart';
+import '../data_source/rest/categories.dart';
 
-@injectable
-class CategoriesApiRepository implements CategoriesRepository {
-  CategoriesApiRepository(this._client);
+
+class CategoriesRepositoryImpl implements CategoriesRepository {
+  CategoriesRepositoryImpl(this._client);
 
   final CategoriesClient _client;
 

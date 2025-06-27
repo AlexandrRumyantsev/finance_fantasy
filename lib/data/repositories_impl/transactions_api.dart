@@ -1,18 +1,16 @@
 import 'package:intl/intl.dart';
-import 'package:injectable/injectable.dart';
 
-import '../../../domain/entities/error.dart';
-import '../../../domain/entities/transaction_extended.dart';
-import '../../../domain/entities/transaction_short.dart';
-import '../../../domain/repositories/transactions.dart';
-import '../../../infrastructure/base/api.dart';
-import '../../../utils/either.dart';
-import '../../mappers/transaction.dart';
-import '../../models/request/transaction_request.dart';
-import '../../data_source/rest/transactions.dart';
+import '../../domain/entities/error.dart';
+import '../../domain/entities/transaction_extended.dart';
+import '../../domain/entities/transaction_short.dart';
+import '../../domain/repositories/transactions.dart';
+import '../../infrastructure/base/api.dart';
+import '../../utils/either.dart';
+import '../mappers/transaction.dart';
+import '../models/request/transaction_request.dart';
+import '../data_source/rest/transactions.dart';
 
-@injectable
-class TransactionsApiRepository implements TransactionRepository {
+class TransactionsRepositoryImpl implements TransactionRepository {
   final _client = TransactionsClient(API.dio);
 
   @override
