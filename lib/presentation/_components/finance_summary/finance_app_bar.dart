@@ -19,32 +19,61 @@ class CommonFinanceAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    final suffix = this.suffix;
     return SliverAppBar(
       pinned: true,
       automaticallyImplyLeading: false,
       expandedHeight: 64,
       collapsedHeight: 64,
-      centerTitle: true,
       backgroundColor: appColors.primary,
       elevation: 0,
       shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
-      title: Text(
-        title,
-        style: TextStyle(color: appColors.text),
-      ),
-      leading: GestureDetector(
-        onTap: onPrefixPressed,
-        child: prefix,
-      ),
-      actions: [
-        if (suffix != null)
-          GestureDetector(
-            onTap: onSuffixPressed,
-            child: suffix,
+      flexibleSpace: FlexibleSpaceBar(
+        background: ColoredBox(
+          color: appColors.primary,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: prefix != null
+                        ? GestureDetector(
+                            onTap: onPrefixPressed,
+                            child: Center(
+                              child: prefix,
+                            ),
+                          )
+                        : null,
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        title,
+                        style: TextStyle(color: appColors.text, fontSize: 24),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: suffix != null
+                        ? GestureDetector(
+                            onTap: onSuffixPressed,
+                            child: Center(
+                              child: suffix,
+                            ),
+                          )
+                        : null,
+                  ),
+                ],
+              ),
+            ),
           ),
-      ],
+        ),
+      ),
     );
   }
 }

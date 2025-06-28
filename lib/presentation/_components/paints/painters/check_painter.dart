@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 
-class ChevronRightPainter extends CustomPainter {
-  ChevronRightPainter({
-    required this.color,
-  });
-
-  /// Цвет
+class CheckPainter extends CustomPainter {
   final Color color;
+
+  CheckPainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final cellSize = size.width / 24;
-    final dyCenter = size.height / 2;
+    final cellSize = size.width / 40;
 
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
+      ..strokeCap = StrokeCap.square
       ..strokeWidth = cellSize * 1.8;
 
     canvas.drawLine(
-      Offset(cellSize * 11, cellSize * 7),
-      Offset(cellSize * 16, dyCenter),
+      Offset(cellSize * 14, cellSize * 20),
+      Offset(cellSize * 20, cellSize * 26),
       paint,
     );
     canvas.drawLine(
-      Offset(cellSize * 16, dyCenter),
-      Offset(cellSize * 11, cellSize * 17),
+      Offset(cellSize * 20, cellSize * 26),
+      Offset(cellSize * 32, cellSize * 14),
       paint,
     );
   }

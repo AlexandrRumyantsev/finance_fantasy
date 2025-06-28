@@ -5,9 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/data_source/database/database.dart';
 import '../infrastructure/base/api.dart';
-import '../infrastructure/managers/shared_prefs.dart';
-import '../utils/theme_provider.dart';
-import 'injection.dart';
 
 @module
 abstract class RegisterModule {

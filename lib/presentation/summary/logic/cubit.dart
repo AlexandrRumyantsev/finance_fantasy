@@ -11,8 +11,7 @@ part 'state.dart';
 abstract class BaseSummaryCubit extends Cubit<SummaryState> {
   BaseSummaryCubit(this._getTransactionsByPeriodUseCase)
       : super(const SummaryState());
-
-  /// TODO: организовать DI
+      
   final GetTransactionsByPeriodUseCase _getTransactionsByPeriodUseCase;
 
   void initState({DateTimeRange? dateRange}) {

@@ -15,12 +15,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: IndexedStack(
         index: _currentPage,
-        children: const [
-          SummaryTabNavigator(isExpense: true),
-          SummaryTabNavigator(isExpense: false),
-          BankAccountPage(),
-          CategoriesPage(),
-          SettingsPage(),
+        children: [
+          const SummaryTabNavigator(isExpense: true),
+          const SummaryTabNavigator(isExpense: false),
+          BlocProvider(
+            create: (context) =>
+                BankAccountCubit(getIt<GetBankAccountsUseCase>()),
+            child: const BankAccountPage(),
+          ),
+          BlocProvider(
+            create: (context) => CategoriesCubit(getIt<GetCategoriesUseCase>()),
+            child: const CategoriesPage(),
+          ),
+          const SettingsPage(),
         ],
       ),
       bottomNavigationBar: AppNavigationBar(

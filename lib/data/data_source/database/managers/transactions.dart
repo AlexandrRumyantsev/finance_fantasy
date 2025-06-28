@@ -1,4 +1,4 @@
-import 'package:finance_fantasy/data/data_source/database/database.dart';
+import '../database.dart';
 
 class TransactionsDatabaseManager {
   TransactionsDatabaseManager(this.database);

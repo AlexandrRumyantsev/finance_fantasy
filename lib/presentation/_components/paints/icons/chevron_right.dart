@@ -14,10 +14,9 @@ class ChevronRight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      height: size,
-      child: CustomPaint(painter: ChevronRightPainter(color: color)),
+    return CustomPaint(
+      size: Size(size, size),
+      painter: ChevronRightPainter(color: color),
     );
   }
 }

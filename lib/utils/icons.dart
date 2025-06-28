@@ -8,4 +8,6 @@ class AppIcons {
   static const String settings = '$_iconPrefix/settings.svg';
   static const String selectPeriod = '$_iconPrefix/select_period.svg';
   static const String history = '$_iconPrefix/history_transactions.svg';
+  static const String edit = '$_iconPrefix/edit.svg';
+  static const String delete = '$_iconPrefix/delete.svg';
 }

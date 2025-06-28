@@ -19,6 +19,7 @@ class SummaryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColors>()!;
+    final comment = this.comment;
     return Column(
       children: [
         Padding(
@@ -38,7 +39,7 @@ class SummaryListItem extends StatelessWidget {
                           Text(categoryName),
                           if (comment != null)
                             Text(
-                              comment!,
+                              comment,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
