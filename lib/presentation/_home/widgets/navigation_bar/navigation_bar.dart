@@ -13,6 +13,7 @@ class AppNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     final items = List.generate(
       iconPaths.length,
       (i) {
@@ -39,7 +40,7 @@ class AppNavigationBar extends StatelessWidget {
 
     return SafeArea(
       child: ColoredBox(
-        color: const Color(0xFFF3EDF7),
+        color: appColors.surfaceContainer,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
           child: Row(

@@ -3,7 +3,7 @@ import '../../../../domain/entities/transaction_extended.dart';
 import '../cubit.dart';
 
 class IncomesSummaryCubit extends BaseSummaryCubit {
-  IncomesSummaryCubit() : super();
+  IncomesSummaryCubit(super.getTransactionsByPeriodUseCase);
 
   @override
   List<TransactionExtended> filterTransactions(

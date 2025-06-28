@@ -1,14 +1,17 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../models/request/transaction_request.dart';
-import '../models/response/transaction_response.dart';
-import '../models/shared/transaction.dart';
+import '../../models/request/transaction_request.dart';
+import '../../models/response/transaction_response.dart';
+import '../../models/shared/transaction.dart';
 
 part 'transactions.g.dart';
 
+@injectable
 @RestApi()
 abstract class TransactionsClient {
+  @factoryMethod
   factory TransactionsClient(Dio dio) => _TransactionsClient(dio);
 
   @POST('/transactions')

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/colors.dart';
+
 class AppDatePickerTheme extends StatelessWidget {
   const AppDatePickerTheme({super.key, required this.child});
 
@@ -7,16 +9,17 @@ class AppDatePickerTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Theme(
       data: Theme.of(context).copyWith(
         datePickerTheme: DatePickerThemeData(
-          backgroundColor: const Color(0xFFD4FAE6),
-          surfaceTintColor: const Color(0xFF2AE881),
+          backgroundColor: appColors.secondary,
+          surfaceTintColor: appColors.primary,
           dividerColor: Colors.transparent,
           dayBackgroundColor: WidgetStateProperty.resolveWith<Color?>(
               (Set<WidgetState> states) {
             if (states.contains(WidgetState.selected)) {
-              return const Color(0xFF2AE881);
+              return appColors.primary;
             }
             return null;
           }),
@@ -32,7 +35,7 @@ class AppDatePickerTheme extends StatelessWidget {
           todayBackgroundColor:
               WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
             if (states.contains(WidgetState.selected)) {
-              return const Color(0xFF2AE881);
+              return appColors.primary;
             } else {
               return Colors.transparent;
             }

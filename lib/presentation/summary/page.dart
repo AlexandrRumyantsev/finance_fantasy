@@ -43,20 +43,10 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                   right: '${state.totalAmount} RUB',
                 ),
               ),
-              switch (state.statusPage) {
-                StatusPage.loading => const SliverFillRemaining(
-                    child: Center(child: AppCircularProgressIndicator()),
-                  ),
-                StatusPage.empty => const SliverFillRemaining(
-                    child: Center(child: Text('Нет данных')),
-                  ),
-                StatusPage.error => const SliverFillRemaining(
-                    child: Center(child: Text('Ошибка загрузки')),
-                  ),
-                StatusPage.data => CommonFinanceList(
-                    transactions: state.transactions ?? [],
-                  ),
-              },
+              CommonFinanceList(
+                transactions: state.transactions ?? [],
+                statusPage: state.statusPage,
+              ),
             ],
           );
         },
