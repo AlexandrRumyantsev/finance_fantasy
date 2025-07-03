@@ -1,7 +1,7 @@
-part of '../components.dart';
+part of 'components.dart';
 
-class CommonSummaryHeaderCard extends StatelessWidget {
-  const CommonSummaryHeaderCard({
+class CommonHeaderCard extends StatelessWidget {
+  const CommonHeaderCard({
     super.key,
     required this.left,
     required this.right,

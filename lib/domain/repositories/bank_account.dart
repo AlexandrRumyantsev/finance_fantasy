@@ -10,7 +10,7 @@ import '../entities/account_extended.dart';
 import '../entities/error.dart';
 
 /// TODO: Заменить AccountHistoryResponse на entity
-@injectable
+@singleton
 abstract interface class BankAccountRepository {
   @factoryMethod
   factory BankAccountRepository(AccountsClient client) =>
