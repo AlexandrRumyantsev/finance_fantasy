@@ -7,7 +7,7 @@ import '../../utils/either.dart';
 import '../entities/category.dart';
 import '../entities/error.dart';
 
-@injectable
+@singleton
 abstract interface class CategoriesRepository {
   @factoryMethod
   factory CategoriesRepository(CategoriesClient client) =>

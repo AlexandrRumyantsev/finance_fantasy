@@ -19,12 +19,11 @@ class _HomePageState extends State<HomePage> {
           const SummaryTabNavigator(isExpense: true),
           const SummaryTabNavigator(isExpense: false),
           BlocProvider(
-            create: (context) =>
-                BankAccountCubit(getIt<GetBankAccountsUseCase>()),
+            create: (context) => getIt<BankAccountCubit>(),
             child: const BankAccountPage(),
           ),
           BlocProvider(
-            create: (context) => CategoriesCubit(getIt<GetCategoriesUseCase>()),
+            create: (context) => getIt<CategoriesCubit>(),
             child: const CategoriesPage(),
           ),
           const SettingsPage(),

@@ -19,7 +19,7 @@ class CommonSummaryHeaderCardDelegate extends SliverPersistentHeaderDelegate {
   ) {
     return GestureDetector(
       onTap: onTap,
-      child: CommonSummaryHeaderCard(left: left, right: right),
+      child: CommonHeaderCard(left: left, right: right),
     );
   }
 

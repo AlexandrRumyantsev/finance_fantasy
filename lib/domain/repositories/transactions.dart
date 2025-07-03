@@ -8,7 +8,7 @@ import '../entities/error.dart';
 import '../entities/transaction_extended.dart';
 import '../entities/transaction_short.dart';
 
-@injectable
+@singleton
 abstract interface class TransactionRepository {
   @factoryMethod
   factory TransactionRepository(TransactionsClient client) =>

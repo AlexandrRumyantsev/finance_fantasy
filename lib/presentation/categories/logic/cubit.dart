@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuzzy/fuzzy.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/category.dart';
 import '../../../domain/entities/status_page.dart';
@@ -8,6 +9,7 @@ import '../../../domain/usecases/get_categories.dart';
 
 part 'state.dart';
 
+@injectable
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesCubit(this._getCategoriesUseCase) : super(const CategoriesState());
 

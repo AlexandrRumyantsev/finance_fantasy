@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/account_brief.dart';
 import '../../../domain/entities/status_page.dart';
@@ -7,6 +8,7 @@ import '../../../domain/usecases/get_bank_accounts.dart';
 
 part 'state.dart';
 
+@injectable
 class BankAccountCubit extends Cubit<BankAccountState> {
   BankAccountCubit(this._getBankAccountsUseCase)
       : super(const BankAccountState());

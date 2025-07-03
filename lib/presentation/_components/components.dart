@@ -8,8 +8,8 @@ import 'paints/icons/chevron_right.dart';
 
 part 'custom_circular_indicator.dart';
 part 'custom_divider.dart';
-part 'finance_summary/amount_card.dart';
-part 'finance_summary/finance_app_bar.dart';
+part 'action_row.dart';
+part 'finance_app_bar.dart';
 part 'finance_summary/finance_list_item.dart';
 part 'finance_summary/finance_list_item_wrapper.dart';
 part 'finance_summary/finance_list_view.dart';

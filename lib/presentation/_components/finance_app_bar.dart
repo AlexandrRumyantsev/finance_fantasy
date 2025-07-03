@@ -1,4 +1,4 @@
-part of '../components.dart';
+part of 'components.dart';
 
 class CommonFinanceAppBar extends StatelessWidget {
   const CommonFinanceAppBar({
