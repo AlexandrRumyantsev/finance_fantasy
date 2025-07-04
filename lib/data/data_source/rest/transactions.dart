@@ -29,7 +29,7 @@ abstract class TransactionsClient {
   );
 
   @DELETE('/transactions/{id}')
-  Future<HttpResponse> deleteTransaction(@Path('id') int id);
+  Future<void> deleteTransaction(@Path('id') int id);
 
   @GET('/transactions/account/{accountId}/period')
   Future<List<TransactionResponse>> getTransactionsByPeriod(

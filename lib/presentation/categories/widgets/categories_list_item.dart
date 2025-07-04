@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/category.dart';
 import '../../../utils/colors.dart';
-import '../../_components/components.dart';
+import '../../components/components.dart';
 
 class CategoriesListItem extends StatelessWidget {
   const CategoriesListItem({

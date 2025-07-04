@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/error.dart';
+import '../../domain/entities/transaction_params.dart';
 import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/entities/transaction_short.dart';
 import '../../../domain/repositories/transactions.dart';
@@ -9,7 +10,6 @@ import '../data_source/rest/transactions.dart';
 import '../mappers/transaction.dart';
 import '../models/request/transaction_request.dart';
 
-
 class TransactionRepositoryImpl implements TransactionRepository {
   TransactionRepositoryImpl(this._client);
 
@@ -17,18 +17,33 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
   @override
   Future<Either<BaseError, TransactionBrief>> createTransaction({
-    required TransactionRequest transaction,
-  }) {
-    // TODO: implement createTransaction
-    throw UnimplementedError();
+    required TransactionParams transaction,
+  }) async {
+    try {
+      final request = TransactionRequest(
+        accountId: transaction.accountId,
+        categoryId: transaction.categoryId,
+        amount: transaction.amount.toString(),
+        transactionDate: transaction.transactionDate,
+        comment: transaction.comment,
+      );
+      final response = await _client.createTransaction(request);
+      return Right(response.toDomain());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override
   Future<Either<BaseError, bool>> deleteTransaction({
     required int transactionId,
-  }) {
-    // TODO: implement deleteTransaction
-    throw UnimplementedError();
+  }) async {
+    try {
+      await _client.deleteTransaction(transactionId);
+      return const Right(true);
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override
@@ -62,10 +77,24 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
   @override
   Future<Either<BaseError, TransactionExtended>> updateTransaction({
-    required TransactionRequest transaction,
+    required TransactionParams transaction,
     required int transactionId,
-  }) {
-    // TODO: implement updateTransaction
-    throw UnimplementedError();
+  }) async {
+    try {
+      final request = TransactionRequest(
+        accountId: transaction.accountId,
+        categoryId: transaction.categoryId,
+        amount: transaction.amount.toString(),
+        transactionDate: transaction.transactionDate,
+        comment: transaction.comment,
+      );
+      final response = await _client.updateTransaction(
+        transactionId,
+        request,
+      );
+      return Right(response.toDomain());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 }

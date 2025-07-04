@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'di/injection.dart';
 import 'infrastructure/managers/shared_prefs.dart';
-import 'presentation/_home/home.dart';
+import 'presentation/home/home.dart';
 import 'utils/colors.dart';
 import 'utils/theme_provider.dart';
 

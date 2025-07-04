@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
 
 import '../../data/data_source/rest/transactions.dart';
-import '../../data/models/request/transaction_request.dart';
 import '../../data/repositories_impl/transactions.dart';
 import '../../utils/either.dart';
 import '../entities/error.dart';
+import '../entities/transaction_params.dart';
 import '../entities/transaction_extended.dart';
 import '../entities/transaction_short.dart';
 
@@ -15,11 +15,11 @@ abstract interface class TransactionRepository {
       TransactionRepositoryImpl(client);
 
   Future<Either<BaseError, TransactionBrief>> createTransaction({
-    required TransactionRequest transaction,
+    required TransactionParams transaction,
   });
 
   Future<Either<BaseError, TransactionExtended>> updateTransaction({
-    required TransactionRequest transaction,
+    required TransactionParams transaction,
     required int transactionId,
   });
 

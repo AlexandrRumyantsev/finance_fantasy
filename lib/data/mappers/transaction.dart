@@ -16,6 +16,17 @@ extension TransactionMapping on TransactionExtended {
         updatedAt: updatedAt,
         comment: comment,
       );
+
+  TransactionBrief toBrief() => TransactionBrief(
+        id: id,
+        accountId: account.id,
+        categoryId: category.id,
+        amount: amount,
+        transactionDate: transactionDate,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        comment: comment,
+      );
 }
 
 extension TransactionResponeMapping on TransactionResponse {

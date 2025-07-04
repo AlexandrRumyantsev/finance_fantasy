@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/category.dart';
 import '../../../domain/entities/status_page.dart';
-import '../../../domain/usecases/get_categories.dart';
+import '../../../domain/usecases/categories/get_categories.dart';
 
 part 'state.dart';
 
