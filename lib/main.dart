@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'di/injection.dart';
 import 'infrastructure/managers/shared_prefs.dart';
-import 'presentation/home/home.dart';
+import 'presentation/splash/splash.dart';
 import 'utils/colors.dart';
 import 'utils/theme_extensions.dart';
 import 'utils/theme_provider.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: themeProvider.themeMode,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const SplashPage(),
     );
   }
 }
