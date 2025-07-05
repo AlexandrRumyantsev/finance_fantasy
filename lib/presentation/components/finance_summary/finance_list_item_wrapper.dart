@@ -17,9 +17,9 @@ class SummaryListItemWrapper<C extends BaseSummaryCubit>
     return GestureDetector(
       onTap: () {
         final title = isIncome ? 'Редактировать доход' : 'Редактировать расход';
-        showModalBottomSheet<bool>(
+        showGeneralDialog<bool>(
           context: context,
-          builder: (context) => BlocProvider(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => getIt<TransactionEditCubit>(
               param1: TransactionEditState(
                 transactionId: transaction.id,
@@ -34,6 +34,12 @@ class SummaryListItemWrapper<C extends BaseSummaryCubit>
               title: title,
               isIncome: isIncome,
             ),
+          ),
+          transitionDuration: const Duration(milliseconds: 300),
+          transitionBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
           ),
         ).then((value) {
           if (value ?? false) {
