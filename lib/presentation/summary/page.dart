@@ -67,13 +67,6 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                 ),
               ],
             ),
-                CommonFinanceList<C>(
-                  transactions: state.transactions ?? [],
-                  statusPage: state.statusPage,
-                  isIncome: isIncome,
-                ),
-              ],
-            ),
           );
         },
       ),
