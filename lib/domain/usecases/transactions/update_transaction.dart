@@ -2,8 +2,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../utils/either.dart';
 import '../../entities/error.dart';
-import '../../entities/transaction_params.dart';
 import '../../entities/transaction_extended.dart';
+import '../../entities/transaction_params.dart';
 import '../../repositories/transactions.dart';
 import '../use_case.dart';
 

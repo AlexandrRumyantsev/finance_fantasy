@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../di/injection.dart';
+import '../../domain/entities/category.dart';
 import '../../domain/entities/status_page.dart';
 import '../../domain/entities/transaction_extended.dart';
 import '../../utils/colors.dart';
+import '../../utils/date_time.dart';
 import '../../utils/num.dart';
 import '../bank_account/logic/cubit.dart';
+import '../categories/logic/cubit.dart';
 import 'paints/icons/check.dart';
 import 'paints/icons/chevron_right.dart';
 import 'paints/icons/cross.dart';
@@ -24,3 +28,5 @@ part 'finance_summary/finance_summary.dart';
 part 'finance_summary/sliver_amount_card.dart';
 part 'transactions/edit_transaction.dart';
 part 'transactions/edit_transaction_field.dart';
+part 'transactions/select_category.dart';
+part 'transactions/amount_input_modal.dart';

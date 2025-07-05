@@ -26,28 +26,33 @@ class _SummaryPageState<C extends BaseSummaryCubit>
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<C>();
     return Scaffold(
       body: BlocBuilder<C, SummaryState>(
         builder: (context, state) {
-          return CustomScrollView(
-            slivers: [
-              CommonFinanceAppBar(
-                title: widget.title,
-                suffix: SvgPicture.asset(AppIcons.selectPeriod),
-                onSuffixPressed: widget.onSuffixPressed,
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: CommonSummaryHeaderCardDelegate(
-                  left: 'Всего',
-                  right: '${state.totalAmount} RUB',
+          return RefreshIndicator(
+            onRefresh: cubit.loadData,
+            color: Theme.of(context).extension<AppColors>()?.primary,
+            child: CustomScrollView(
+              slivers: [
+                CommonFinanceAppBar(
+                  title: widget.title,
+                  suffix: SvgPicture.asset(AppIcons.selectPeriod),
+                  onSuffixPressed: widget.onSuffixPressed,
                 ),
-              ),
-              CommonFinanceList(
-                transactions: state.transactions ?? [],
-                statusPage: state.statusPage,
-              ),
-            ],
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CommonSummaryHeaderCardDelegate(
+                    left: 'Всего',
+                    right: '${state.totalAmount} RUB',
+                  ),
+                ),
+                CommonFinanceList(
+                  transactions: state.transactions ?? [],
+                  statusPage: state.statusPage,
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -55,7 +60,7 @@ class _SummaryPageState<C extends BaseSummaryCubit>
         onPressed: () {
           final isIncome = context.read<C>() is IncomesSummaryCubit;
           final title = isIncome ? 'Добавить доход' : 'Добавить расход';
-          showModalBottomSheet(
+          showModalBottomSheet<bool>(
             context: context,
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
@@ -65,10 +70,16 @@ class _SummaryPageState<C extends BaseSummaryCubit>
               ),
               child: BlocProvider(
                 create: (context) => getIt<TransactionEditCubit>(),
-                child: ModalEditTransaction(title: title),
+                child: ModalEditTransaction(
+                  title: title,
+                  isIncome: isIncome,
+                ),
               ),
             ),
-          );
+          ).then((value) {
+            if (value != true) return;
+            cubit.loadData();
+          });
         },
         backgroundColor: Theme.of(context).extension<AppColors>()?.primary,
         elevation: 0,

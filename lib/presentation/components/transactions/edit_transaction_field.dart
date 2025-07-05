@@ -25,8 +25,7 @@ class EditTransactionField extends StatelessWidget {
             Text(label, style: Theme.of(context).textTheme.bodyMedium),
             const Spacer(),
             Text(value, style: Theme.of(context).textTheme.bodyMedium),
-            if (showChevron)
-            const ChevronRight(),
+            if (showChevron) const ChevronRight(),
           ],
         ),
       ),

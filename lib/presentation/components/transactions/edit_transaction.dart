@@ -1,15 +1,37 @@
 part of '../components.dart';
 
-class ModalEditTransaction extends StatelessWidget {
+class ModalEditTransaction extends StatefulWidget {
   const ModalEditTransaction({
     super.key,
     required this.title,
+    required this.isIncome,
   });
 
   final String title;
+  final bool isIncome;
+
+  @override
+  State<ModalEditTransaction> createState() => _ModalEditTransactionState();
+}
+
+class _ModalEditTransactionState extends State<ModalEditTransaction> {
+  late TextEditingController _commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _commentController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<TransactionEditCubit>();
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(20),
@@ -25,15 +47,14 @@ class ModalEditTransaction extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CommonFinanceAppBarWidget(
-                  title: title,
+                  title: widget.title,
                   prefix: const CrossIcon(),
                   onPrefixPressed: Navigator.of(context).pop,
                   suffix: const CheckIcon(),
                   onSuffixPressed: () async {
-                    final result =
-                        await context.read<TransactionEditCubit>().save();
+                    final result = await cubit.save();
                     if (result) {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -54,7 +75,6 @@ class ModalEditTransaction extends StatelessWidget {
                           value: state.account?.name ?? '',
                           showChevron: true,
                           onTap: () {
-                            final cubit = context.read<TransactionEditCubit>();
                             showModalBottomSheet(
                               context: context,
                               builder: (context) => BlocProvider(
@@ -71,30 +91,110 @@ class ModalEditTransaction extends StatelessWidget {
                           label: 'Статья',
                           value: state.category?.name ?? '',
                           showChevron: true,
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => BlocProvider(
+                                create: (context) => getIt<CategoriesCubit>(),
+                                child: SelectCategory(
+                                  isIncome: widget.isIncome,
+                                  onCategorySelected: cubit.updateCategory,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         EditTransactionField(
                           label: 'Сумма',
-                          value: state.amount?.toString() ?? '',
-                          showChevron: true,
+                          value:
+                              '${state.amount?.toStringAsFixed(2) ?? '0.00'} ${state.account?.currency ?? 'RUB'}',
+                          showChevron: false,
+                          onTap: () {
+                            showModalBottomSheet<double>(
+                              context: context,
+                              builder: (context) => AmountInputModal(
+                                initialValue: state.amount?.toString() ?? '',
+                              ),
+                            ).then((value) {
+                              if (value != null) {
+                                cubit.updateAmount(value);
+                              }
+                            });
+                          },
                         ),
                         const CustomDivider(),
                         EditTransactionField(
                           label: 'Дата',
-                          value: state.dateOnly?.toString() ?? '',
+                          value: state.dateOnly?.toDateString() ?? '',
                           showChevron: false,
+                          onTap: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: state.transactionDate,
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime.now(),
+                              initialEntryMode:
+                                  DatePickerEntryMode.calendarOnly,
+                            ).then((value) {
+                              if (value != null) {
+                                cubit.updateDate(value);
+                              }
+                            });
+                          },
                         ),
                         const CustomDivider(),
                         EditTransactionField(
                           label: 'Время',
-                          value: state.timeOfDay?.toString() ?? '',
+                          value: state.timeOfDay?.toTimeString() ?? '',
                           showChevron: false,
+                          onTap: () {
+                            showTimePicker(
+                              context: context,
+                              initialTime: state.timeOfDay ?? TimeOfDay.now(),
+                              builder: (context, child) {
+                                return MediaQuery(
+                                  data: MediaQuery.of(context).copyWith(
+                                    alwaysUse24HourFormat: true,
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            ).then((value) {
+                              if (value != null) {
+                                cubit.updateTime(value);
+                              }
+                            });
+                          },
                         ),
                         const CustomDivider(),
-                        EditTransactionField(
-                          label: 'Комментарий',
-                          value: state.comment ?? '',
-                          showChevron: false,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: BlocBuilder<TransactionEditCubit,
+                              TransactionEditState>(
+                            builder: (context, state) {
+                              if (_commentController.text !=
+                                  (state.comment ?? '')) {
+                                _commentController.text = state.comment ?? '';
+                              }
+                              return TextField(
+                                controller: _commentController,
+                                onChanged: cubit.updateComment,
+                                decoration: const InputDecoration(
+                                  hintText: 'Комментарий',
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 16),
+                                ),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                                maxLines: null,
+                                textInputAction: TextInputAction.done,
+                              );
+                            },
+                          ),
                         ),
                         const CustomDivider(),
                       ],

@@ -21,47 +21,53 @@ class _BankAccountPageState extends State<BankAccountPage> {
     return BlocBuilder<BankAccountCubit, BankAccountState>(
       builder: (context, state) {
         return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              CommonFinanceAppBar(
-                title: 'Мой счет',
-                suffix: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
-                  child: state.pageMode == PageMode.edit
-                      ? CheckIcon(
-                          key: const ValueKey('check'),
-                          color: appColors.text,
-                        )
-                      : SvgPicture.asset(
-                          key: const ValueKey('edit'),
-                          AppIcons.edit,
-                          width: 40,
-                          height: 40,
-                        ),
-                ),
-                onSuffixPressed: cubit.toggleEditMode,
-                prefix: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
-                  child: state.pageMode == PageMode.edit
-                      ? CrossIcon(
-                          key: const ValueKey('cross'),
-                          color: appColors.text,
-                        )
-                      : const SizedBox.shrink(key: ValueKey('empty')),
-                ),
-                onPrefixPressed: cubit.toggleEditMode,
-              ),
-              switch (state.pageMode) {
-                PageMode.list => BankAccountList(
-                    bankAccounts: state.bankAccounts,
-                    status: state.status,
+          body: RefreshIndicator(
+            onRefresh: () async {
+              cubit.loadData();
+            },
+            color: appColors.primary,
+            child: CustomScrollView(
+              slivers: [
+                CommonFinanceAppBar(
+                  title: 'Мой счет',
+                  suffix: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 150),
+                    child: state.pageMode == PageMode.edit
+                        ? CheckIcon(
+                            key: const ValueKey('check'),
+                            color: appColors.text,
+                          )
+                        : SvgPicture.asset(
+                            key: const ValueKey('edit'),
+                            AppIcons.edit,
+                            width: 40,
+                            height: 40,
+                          ),
                   ),
-                PageMode.edit => BankAccountListEdit(
-                    bankAccounts: state.bankAccounts,
-                    status: state.status,
+                  onSuffixPressed: cubit.toggleEditMode,
+                  prefix: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 150),
+                    child: state.pageMode == PageMode.edit
+                        ? CrossIcon(
+                            key: const ValueKey('cross'),
+                            color: appColors.text,
+                          )
+                        : const SizedBox.shrink(key: ValueKey('empty')),
                   ),
-              },
-            ],
+                  onPrefixPressed: cubit.toggleEditMode,
+                ),
+                switch (state.pageMode) {
+                  PageMode.list => BankAccountList(
+                      bankAccounts: state.bankAccounts,
+                      status: state.status,
+                    ),
+                  PageMode.edit => BankAccountListEdit(
+                      bankAccounts: state.bankAccounts,
+                      status: state.status,
+                    ),
+                },
+              ],
+            ),
           ),
         );
       },

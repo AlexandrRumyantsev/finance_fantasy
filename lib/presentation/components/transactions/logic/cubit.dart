@@ -25,22 +25,10 @@ class TransactionEditCubit extends Cubit<TransactionEditState> {
   final UpdateTransactionUseCase _updateTransactionUseCase;
   final DeleteTransactionUseCase _deleteTransactionUseCase;
 
-  factory TransactionEditCubit.createWithInitialState(
-    TransactionEditState initialState,
-    CreateTransactionUseCase createTransactionUseCase,
-    UpdateTransactionUseCase updateTransactionUseCase,
-    DeleteTransactionUseCase deleteTransactionUseCase,
-  ) {
-    final cubit = TransactionEditCubit(
-      createTransactionUseCase,
-      updateTransactionUseCase,
-      deleteTransactionUseCase,
-    );
-    cubit.emit(initialState);
-    return cubit;
+  void initState(TransactionEditState initialState) {
+    emit(initialState);
   }
 
-  // Методы для обновления отдельных полей
   void updateAmount(double? amount) {
     emit(
       state.copyWith(
@@ -65,7 +53,6 @@ class TransactionEditCubit extends Cubit<TransactionEditState> {
     );
   }
 
-  // Обновить только дату, сохранив существующее время
   void updateDate(DateTime date) {
     final newDateTime = state.combineWithDate(date);
     if (newDateTime != null) {
@@ -77,7 +64,6 @@ class TransactionEditCubit extends Cubit<TransactionEditState> {
     }
   }
 
-  // Обновить только время, сохранив существующую дату
   void updateTime(TimeOfDay time) {
     final newDateTime = state.combineWithTime(time);
     if (newDateTime != null) {
@@ -89,7 +75,6 @@ class TransactionEditCubit extends Cubit<TransactionEditState> {
     }
   }
 
-  // Обновить полную дату и время
   void updateDateTime(DateTime dateTime) {
     emit(
       state.copyWith(

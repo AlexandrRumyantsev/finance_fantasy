@@ -70,7 +70,8 @@ class AppColors extends ThemeExtension<AppColors> {
       text: text ?? this.text,
       chevronRight: chevronRight ?? this.chevronRight,
       divider: divider ?? this.divider,
-      unselectedButtonNavBar: unselectedButtonNavBar ?? this.unselectedButtonNavBar,
+      unselectedButtonNavBar:
+          unselectedButtonNavBar ?? this.unselectedButtonNavBar,
       deleteButton: deleteButton ?? this.deleteButton,
       surfaceContainer: surfaceContainer ?? this.surfaceContainer,
     );

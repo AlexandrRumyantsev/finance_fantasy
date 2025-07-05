@@ -11,30 +11,35 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void initState() {
     super.initState();
-    context.read<CategoriesCubit>().loadData();
+    context.read<CategoriesCubit>().loadAllCategories();
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CategoriesCubit>();
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          const CommonFinanceAppBar(
-            title: 'Мои статьи',
-          ),
-          const SliverPersistentHeader(
-            pinned: true,
-            delegate: _SearchBarDelegate(
-              child: CategoriesSearchBar(),
+      body: RefreshIndicator(
+        onRefresh: cubit.loadAllCategories,
+        color: Theme.of(context).extension<AppColors>()?.primary,
+        child: CustomScrollView(
+          slivers: [
+            const CommonFinanceAppBar(
+              title: 'Мои статьи',
             ),
-          ),
-          BlocBuilder<CategoriesCubit, CategoriesState>(
-            builder: (context, state) => CategoriesList(
-              categories: context.read<CategoriesCubit>().filteredCategories,
-              status: state.status,
+            const SliverPersistentHeader(
+              pinned: true,
+              delegate: _SearchBarDelegate(
+                child: CategoriesSearchBar(),
+              ),
             ),
-          ),
-        ],
+            BlocBuilder<CategoriesCubit, CategoriesState>(
+              builder: (context, state) => CategoriesList(
+                categories: context.read<CategoriesCubit>().filteredCategories,
+                status: state.status,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
