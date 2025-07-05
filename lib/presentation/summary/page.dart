@@ -48,6 +48,25 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                     right: '${state.totalAmount.toStringAsFixed(2)} RUB',
                   ),
                 ),
+                CommonFinanceAppBar(
+                  title: widget.title,
+                  suffix: SvgPicture.asset(AppIcons.selectPeriod),
+                  onSuffixPressed: widget.onSuffixPressed,
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CommonSummaryHeaderCardDelegate(
+                    left: 'Всего',
+                    right: '${state.totalAmount.toStringAsFixed(2)} RUB',
+                  ),
+                ),
+                CommonFinanceList<C>(
+                  transactions: state.transactions ?? [],
+                  statusPage: state.statusPage,
+                  isIncome: isIncome,
+                ),
+              ],
+            ),
                 CommonFinanceList<C>(
                   transactions: state.transactions ?? [],
                   statusPage: state.statusPage,
