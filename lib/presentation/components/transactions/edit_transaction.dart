@@ -52,7 +52,9 @@ class _ModalEditTransactionState extends State<ModalEditTransaction> {
                   onPrefixPressed: Navigator.of(context).pop,
                   suffix: const CheckIcon(),
                   onSuffixPressed: () async {
+                    final context = this.context;
                     final result = await cubit.save();
+                    if (!context.mounted) return;
                     if (result) {
                       Navigator.of(context).pop(true);
                     } else {
@@ -197,6 +199,50 @@ class _ModalEditTransactionState extends State<ModalEditTransaction> {
                           ),
                         ),
                         const CustomDivider(),
+                        Visibility(
+                          visible: !cubit.state.isNewTransaction,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Theme.of(context)
+                                      .extension<AppColors>()
+                                      ?.deleteButton,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 10,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  final context = this.context;
+                                  final result = await cubit.delete();
+                                  if (!context.mounted) return;
+                                  if (result) {
+                                    Navigator.of(context).pop(true);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Ошибка при удалении'),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  'Удалить ${widget.isIncome ? 'доход' : 'расход'}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

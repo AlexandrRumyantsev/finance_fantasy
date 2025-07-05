@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/error.dart';
-import '../../domain/entities/transaction_params.dart';
 import '../../../domain/entities/transaction_extended.dart';
 import '../../../domain/entities/transaction_short.dart';
 import '../../../domain/repositories/transactions.dart';
 import '../../../utils/either.dart';
+import '../../domain/entities/transaction_params.dart';
 import '../data_source/rest/transactions.dart';
 import '../mappers/transaction.dart';
 import '../models/request/transaction_request.dart';

@@ -16,8 +16,17 @@ class _HomePageState extends State<HomePage> {
       body: IndexedStack(
         index: _currentPage,
         children: [
-          const SummaryTabNavigator(isExpense: true),
-          const SummaryTabNavigator(isExpense: false),
+          BlocProvider(
+            create: (context) => getIt<ExpenseSummaryCubit>(),
+            child:
+                const SummaryTabNavigator<ExpenseSummaryCubit>(isExpense: true),
+          ),
+          BlocProvider(
+            create: (context) => getIt<IncomesSummaryCubit>(),
+            child: const SummaryTabNavigator<IncomesSummaryCubit>(
+              isExpense: false,
+            ),
+          ),
           BlocProvider(
             create: (context) => getIt<BankAccountCubit>(),
             child: const BankAccountPage(),

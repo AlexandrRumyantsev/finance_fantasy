@@ -1,7 +1,12 @@
 part of 'history.dart';
 
 class HistoryPage<C extends BaseSummaryCubit> extends StatefulWidget {
-  const HistoryPage({super.key});
+  const HistoryPage({
+    super.key,
+    required this.isIncome,
+  });
+
+  final bool isIncome;
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -89,12 +94,13 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
                     left: 'Сумма',
-                    right: '${state.totalAmount} RUB',
+                    right: '${state.totalAmount.toStringAsFixed(2)} RUB',
                   ),
                 ),
-                CommonFinanceList(
+                CommonFinanceList<C>(
                   transactions: state.transactions ?? [],
                   statusPage: state.statusPage,
+                  isIncome: widget.isIncome,
                 ),
               ],
             ),

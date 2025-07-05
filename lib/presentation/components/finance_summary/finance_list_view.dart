@@ -1,13 +1,15 @@
 part of '../components.dart';
 
-class CommonFinanceList extends StatelessWidget {
+class CommonFinanceList<C extends BaseSummaryCubit> extends StatelessWidget {
   const CommonFinanceList({
     super.key,
     required this.transactions,
     required this.statusPage,
+    required this.isIncome,
   });
 
   final List<TransactionExtended> transactions;
+  final bool isIncome;
   final StatusPage statusPage;
 
   @override
@@ -25,8 +27,9 @@ class CommonFinanceList extends StatelessWidget {
           child: Center(child: Text('Ошибка загрузки')),
         ),
       StatusPage.data => SliverList.builder(
-          itemBuilder: (context, index) => SummaryListItemWrapper(
+          itemBuilder: (context, index) => SummaryListItemWrapper<C>(
             transaction: transactions[index],
+            isIncome: isIncome,
           ),
           itemCount: transactions.length,
         ),

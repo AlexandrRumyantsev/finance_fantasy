@@ -27,6 +27,7 @@ class _SummaryPageState<C extends BaseSummaryCubit>
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<C>();
+    final isIncome = context.read<C>() is IncomesSummaryCubit;
     return Scaffold(
       body: BlocBuilder<C, SummaryState>(
         builder: (context, state) {
@@ -44,12 +45,13 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
                     left: 'Всего',
-                    right: '${state.totalAmount} RUB',
+                    right: '${state.totalAmount.toStringAsFixed(2)} RUB',
                   ),
                 ),
-                CommonFinanceList(
+                CommonFinanceList<C>(
                   transactions: state.transactions ?? [],
                   statusPage: state.statusPage,
+                  isIncome: isIncome,
                 ),
               ],
             ),
@@ -69,7 +71,11 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: BlocProvider(
-                create: (context) => getIt<TransactionEditCubit>(),
+                create: (context) => getIt<TransactionEditCubit>(
+                  param1: TransactionEditState(
+                    transactionDate: DateTime.now(),
+                  ),
+                ),
                 child: ModalEditTransaction(
                   title: title,
                   isIncome: isIncome,

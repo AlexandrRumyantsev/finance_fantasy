@@ -18,15 +18,18 @@ class EditTransactionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
-        child: Row(
-          children: [
-            Text(label, style: Theme.of(context).textTheme.bodyMedium),
-            const Spacer(),
-            Text(value, style: Theme.of(context).textTheme.bodyMedium),
-            if (showChevron) const ChevronRight(),
-          ],
+      child: ColoredBox(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
+          child: Row(
+            children: [
+              Text(label, style: Theme.of(context).textTheme.bodyMedium),
+              const Spacer(),
+              Text(value, style: Theme.of(context).textTheme.bodyMedium),
+              if (showChevron) const ChevronRight(),
+            ],
+          ),
         ),
       ),
     );

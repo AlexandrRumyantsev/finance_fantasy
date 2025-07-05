@@ -19,15 +19,12 @@ class TransactionEditCubit extends Cubit<TransactionEditState> {
     this._createTransactionUseCase,
     this._updateTransactionUseCase,
     this._deleteTransactionUseCase,
-  ) : super(const TransactionEditState());
+    @factoryParam TransactionEditState? initialState,
+  ) : super(initialState ?? const TransactionEditState());
 
   final CreateTransactionUseCase _createTransactionUseCase;
   final UpdateTransactionUseCase _updateTransactionUseCase;
   final DeleteTransactionUseCase _deleteTransactionUseCase;
-
-  void initState(TransactionEditState initialState) {
-    emit(initialState);
-  }
 
   void updateAmount(double? amount) {
     emit(
@@ -100,7 +97,9 @@ class TransactionEditCubit extends Cubit<TransactionEditState> {
   }
 
   Future<bool> delete() async {
-    final result = await _deleteTransactionUseCase.call(state.transactionId!);
+    final transactionId = state.transactionId;
+    if (transactionId == null) return false;
+    final result = await _deleteTransactionUseCase.call(transactionId);
     return result.fold(
       (error) => false,
       (transaction) => true,

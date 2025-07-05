@@ -4,8 +4,8 @@ import '../../data/data_source/rest/transactions.dart';
 import '../../data/repositories_impl/transactions.dart';
 import '../../utils/either.dart';
 import '../entities/error.dart';
-import '../entities/transaction_params.dart';
 import '../entities/transaction_extended.dart';
+import '../entities/transaction_params.dart';
 import '../entities/transaction_short.dart';
 
 @singleton
