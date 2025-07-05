@@ -24,8 +24,12 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
   @override
   Future<Either<BaseError, List<Category>>> getCategoriesByType({
     required bool isIncome,
-  }) {
-    // TODO: implement getCategoriesByType
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await _client.getCategoriesByType(isIncome);
+      return Right(response.map((e) => e.toDomain()).toList());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 }

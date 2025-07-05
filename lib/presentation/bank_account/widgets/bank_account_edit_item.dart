@@ -20,7 +20,7 @@ class BankAccountEditItem extends StatelessWidget {
           children: [
             Expanded(
               child: CommonHeaderCard(
-                left: bankAccount.name,
+                left: 'Баланс',
                 right: '${bankAccount.balance} ${bankAccount.currency}',
                 rightIcon: ChevronRight(color: appColors.chevronRight),
               ),

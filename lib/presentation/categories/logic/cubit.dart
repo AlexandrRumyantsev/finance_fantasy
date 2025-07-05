@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/category.dart';
 import '../../../domain/entities/status_page.dart';
-import '../../../domain/usecases/get_categories.dart';
+import '../../../domain/usecases/categories/get_categories.dart';
 
 part 'state.dart';
 
@@ -15,11 +15,29 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   final GetCategoriesUseCase _getCategoriesUseCase;
 
-  Future<void> loadData() async {
-    await getCategories();
+  Future<void> loadAllCategories() async {
+    await getAllCategories();
   }
 
-  Future<void> getCategories() async {
+  Future<void> loadCategoriesByType(bool isIncome) async {
+    await getCategoriesByType(isIncome);
+  }
+
+  Future<void> getCategoriesByType(bool isIncome) async {
+    emit(state.copyWith(status: StatusPage.loading));
+    final result = await _getCategoriesUseCase.call(isIncome);
+    result.fold(
+      (error) => emit(state.copyWith(status: StatusPage.error)),
+      (categories) => emit(
+        state.copyWith(
+          categories: categories,
+          status: StatusPage.data,
+        ),
+      ),
+    );
+  }
+
+  Future<void> getAllCategories() async {
     emit(state.copyWith(status: StatusPage.loading));
     final result = await _getCategoriesUseCase.call(null);
     result.fold(

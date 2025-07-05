@@ -15,7 +15,7 @@ class BankAccountListItem extends StatelessWidget {
       children: [
         CommonHeaderCard(
           leftIcon: const Icon(Icons.account_balance),
-          left: bankAccount.name,
+          left: 'Баланс',
           right: '${bankAccount.balance} ${bankAccount.currency}',
           rightIcon: ChevronRight(color: appColors.chevronRight),
         ),
@@ -24,6 +24,10 @@ class BankAccountListItem extends StatelessWidget {
           left: 'Валюта',
           right: bankAccount.currency,
           rightIcon: ChevronRight(color: appColors.chevronRight),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: BankAccountChart(),
         ),
       ],
     );

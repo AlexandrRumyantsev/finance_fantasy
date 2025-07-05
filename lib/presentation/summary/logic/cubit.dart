@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entities/status_page.dart';
 import '../../../domain/entities/transaction_extended.dart';
-import '../../../domain/usecases/transactions_by_period.dart';
+import '../../../domain/usecases/transactions/transactions_by_period.dart';
 
 part 'state.dart';
 

@@ -6,11 +6,12 @@ import '../../domain/entities/account_brief.dart';
 import '../../domain/entities/status_page.dart';
 import '../../utils/colors.dart';
 import '../../utils/icons.dart';
-import '../_components/components.dart';
-import '../_components/paints/icons/check.dart';
-import '../_components/paints/icons/chevron_right.dart';
-import '../_components/paints/icons/cross.dart';
+import '../components/components.dart';
+import '../components/paints/icons/check.dart';
+import '../components/paints/icons/chevron_right.dart';
+import '../components/paints/icons/cross.dart';
 import 'logic/cubit.dart';
+import 'widgets/balance_chart.dart';
 
 part 'page.dart';
 part 'widgets/bank_account_list.dart';

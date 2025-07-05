@@ -1,6 +1,5 @@
 part of '../bank_account.dart';
 
-
 class BankAccountList extends StatelessWidget {
   const BankAccountList({
     super.key,

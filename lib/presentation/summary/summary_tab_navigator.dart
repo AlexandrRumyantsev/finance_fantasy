@@ -25,7 +25,9 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
               create: (context) => isExpense
                   ? getIt<ExpenseSummaryCubit>()
                   : getIt<IncomesSummaryCubit>(),
-              child: HistoryPage<C>(),
+              child: HistoryPage<C>(
+                isIncome: !isExpense,
+              ),
             ),
           );
         }

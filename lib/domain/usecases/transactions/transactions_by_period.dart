@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
-import '../../utils/either.dart';
-import '../entities/error.dart';
-import '../entities/transaction_extended.dart';
-import '../repositories/bank_account.dart';
-import '../repositories/transactions.dart';
-import 'use_case.dart';
+import '../../../utils/either.dart';
+import '../../entities/error.dart';
+import '../../entities/transaction_extended.dart';
+import '../../repositories/bank_account.dart';
+import '../../repositories/transactions.dart';
+import '../use_case.dart';
 
 @injectable
 class GetTransactionsByPeriodUseCase

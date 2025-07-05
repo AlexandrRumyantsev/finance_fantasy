@@ -10,6 +10,8 @@ import '../bank_account/logic/cubit.dart';
 import '../categories/categories.dart';
 import '../categories/logic/cubit.dart';
 import '../settings/settings.dart';
+import '../summary/logic/expense/cubit.dart';
+import '../summary/logic/incomes/cubit.dart';
 import '../summary/summary_tab_navigator.dart';
 
 part 'page.dart';
