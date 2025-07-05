@@ -32,11 +32,7 @@ class _ModalEditTransactionState extends State<ModalEditTransaction> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<TransactionEditCubit>();
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(20),
-        topRight: Radius.circular(20),
-      ),
+    return Material(
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).extension<AppColors>()?.background,

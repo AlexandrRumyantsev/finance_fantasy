@@ -62,24 +62,18 @@ class _SummaryPageState<C extends BaseSummaryCubit>
         onPressed: () {
           final isIncome = context.read<C>() is IncomesSummaryCubit;
           final title = isIncome ? 'Добавить доход' : 'Добавить расход';
-          showModalBottomSheet<bool>(
+          showGeneralDialog<bool>(
             context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (context) => Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                BlocProvider(
+              create: (context) => getIt<TransactionEditCubit>(
+                param1: TransactionEditState(
+                  transactionDate: DateTime.now(),
+                ),
               ),
-              child: BlocProvider(
-                create: (context) => getIt<TransactionEditCubit>(
-                  param1: TransactionEditState(
-                    transactionDate: DateTime.now(),
-                  ),
-                ),
-                child: ModalEditTransaction(
-                  title: title,
-                  isIncome: isIncome,
-                ),
+              child: ModalEditTransaction(
+                title: title,
+                isIncome: isIncome,
               ),
             ),
           ).then((value) {
