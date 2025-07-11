@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:worker_manager/worker_manager.dart';
 
 import '../../../domain/entities/error.dart';
 import '../../../domain/entities/transaction_extended.dart';
@@ -10,7 +9,6 @@ import '../../domain/entities/transaction_params.dart';
 import '../data_source/rest/api_client.dart';
 import '../mappers/transaction.dart';
 import '../models/request/transaction_request.dart';
-import '../models/shared/transaction.dart';
 
 class TransactionRepositoryImpl implements TransactionRepository {
   TransactionRepositoryImpl(this._client);
