@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../data/data_source/rest/accounts.dart';
+import '../../data/data_source/rest/api_client.dart';
 import '../../data/models/request/account_create_request.dart';
 import '../../data/models/request/account_update_request.dart';
 import '../../data/models/response/account_history_response.dart';
@@ -13,7 +13,7 @@ import '../entities/error.dart';
 @singleton
 abstract interface class BankAccountRepository {
   @factoryMethod
-  factory BankAccountRepository(AccountsClient client) =>
+  factory BankAccountRepository(ApiClient client) =>
       BankAccountRepositoryImpl(client);
 
   Future<Either<BaseError, List<AccountExtended>>> getBankAccounts();

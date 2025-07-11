@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../data/data_source/rest/categories.dart';
+import '../../data/data_source/rest/api_client.dart';
 import '../../data/repositories_impl/categories.dart';
 import '../../utils/either.dart';
 
@@ -10,7 +10,7 @@ import '../entities/error.dart';
 @singleton
 abstract interface class CategoriesRepository {
   @factoryMethod
-  factory CategoriesRepository(CategoriesClient client) =>
+  factory CategoriesRepository(ApiClient client) =>
       CategoriesRepositoryImpl(client);
 
   Future<Either<BaseError, List<Category>>> getCategories();

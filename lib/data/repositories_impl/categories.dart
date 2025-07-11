@@ -2,14 +2,13 @@ import '../../../domain/entities/category.dart';
 import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/categories.dart';
 import '../../../utils/either.dart';
-import '../data_source/rest/categories.dart';
+import '../data_source/rest/api_client.dart';
 import '../mappers/category.dart';
-
 
 class CategoriesRepositoryImpl implements CategoriesRepository {
   CategoriesRepositoryImpl(this._client);
 
-  final CategoriesClient _client;
+  final ApiClient _client;
 
   @override
   Future<Either<BaseError, List<Category>>> getCategories() async {
