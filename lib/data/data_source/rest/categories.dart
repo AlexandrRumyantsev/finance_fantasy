@@ -6,6 +6,7 @@ import '../../models/shared/category.dart';
 
 part 'categories.g.dart';
 
+/// [CategoriesClient] is a client for the categories API.
 @injectable
 @RestApi()
 abstract class CategoriesClient {

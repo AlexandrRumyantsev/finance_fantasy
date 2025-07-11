@@ -8,6 +8,7 @@ import '../../models/shared/transaction.dart';
 
 part 'transactions.g.dart';
 
+/// [TransactionsClient] is a client for the transactions API.
 @injectable
 @RestApi()
 abstract class TransactionsClient {

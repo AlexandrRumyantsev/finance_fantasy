@@ -49,9 +49,13 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<Either<BaseError, TransactionExtended>> getTransactionById({
     required int transactionId,
-  }) {
-    // TODO: implement getTransactionById
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await _client.getTransactionById(transactionId);
+      return Right(response.toDomain());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override

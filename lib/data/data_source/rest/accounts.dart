@@ -4,12 +4,14 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../models/request/account_create_request.dart';
 import '../../models/request/account_update_request.dart';
+import '../../models/response/account_history_response.dart';
 import '../../models/response/account_response.dart';
 import '../../models/shared/account.dart';
 import '../../models/shared/account_history.dart';
 
 part 'accounts.g.dart';
 
+/// [AccountsClient] is a client for the accounts API.
 @injectable
 @RestApi()
 abstract class AccountsClient {
@@ -35,5 +37,5 @@ abstract class AccountsClient {
   Future<AccountResponse> getAccountById(@Path('id') int id);
 
   @GET('/accounts/{id}/history')
-  Future<List<AccountHistoryDto>> getAccountHistory(@Path('id') int id);
+  Future<AccountHistoryResponse> getAccountHistory(@Path('id') int id);
 }

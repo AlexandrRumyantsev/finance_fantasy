@@ -15,17 +15,25 @@ class BankAccountRepositoryImpl implements BankAccountRepository {
   @override
   Future<Either<BaseError, AccountExtended>> createBankAccount({
     required AccountCreateRequest account,
-  }) {
-    // TODO: implement createBankAccount
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await _client.createAccount(account);
+      return Right(response.toDomainExtended());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override
   Future<Either<BaseError, AccountHistoryResponse>> getAccountHistory({
     required int accountId,
-  }) {
-    // TODO: implement getAccountHistory
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await _client.getAccountHistory(accountId);
+      return Right(response);
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override
