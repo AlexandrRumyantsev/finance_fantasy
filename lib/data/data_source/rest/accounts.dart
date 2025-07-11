@@ -7,7 +7,6 @@ import '../../models/request/account_update_request.dart';
 import '../../models/response/account_history_response.dart';
 import '../../models/response/account_response.dart';
 import '../../models/shared/account.dart';
-import '../../models/shared/account_history.dart';
 
 part 'accounts.g.dart';
 

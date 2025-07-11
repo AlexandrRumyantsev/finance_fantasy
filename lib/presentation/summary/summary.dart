@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../di/injection.dart';
-import '../../infrastructure/managers/manager.dart';
 import '../../utils/colors.dart';
 import '../../utils/icons.dart';
 import '../components/components.dart';

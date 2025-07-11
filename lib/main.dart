@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:worker_manager/worker_manager.dart';
 
 import 'di/injection.dart';
 import 'infrastructure/managers/manager.dart';
@@ -17,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await configureDependencies();
+  await workerManager.init();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(getIt<SharedPrefsManager>()),
