@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/entities/error.dart';
@@ -10,6 +11,7 @@ import '../data_source/rest/api_service.dart';
 import '../mappers/transaction.dart';
 import '../models/request/transaction_request.dart';
 
+@injectable
 class TransactionRepositoryImpl implements TransactionRepository {
   TransactionRepositoryImpl(this._apiService);
 

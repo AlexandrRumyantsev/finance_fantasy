@@ -1,3 +1,5 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../domain/entities/category.dart';
 import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/categories.dart';
@@ -5,6 +7,7 @@ import '../../../utils/either.dart';
 import '../data_source/rest/api_service.dart';
 import '../mappers/category.dart';
 
+@injectable
 class CategoriesRepositoryImpl implements CategoriesRepository {
   CategoriesRepositoryImpl(this._apiService);
 

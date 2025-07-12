@@ -8,7 +8,7 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) {
     final apiKey = dotenv.env['API_KEY'];
-    if (apiKey != null) {
+    if (apiKey != null && apiKey.isNotEmpty && apiKey != 'your_api_key_here') {
       options.headers['Authorization'] = 'Bearer $apiKey';
     }
     handler.next(options);

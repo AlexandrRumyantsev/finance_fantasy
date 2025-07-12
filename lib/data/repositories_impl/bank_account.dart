@@ -1,3 +1,5 @@
+import 'package:injectable/injectable.dart';
+
 import '../../domain/entities/account_extended.dart';
 import '../../domain/entities/error.dart';
 import '../../domain/repositories/bank_account.dart';
@@ -8,6 +10,7 @@ import '../models/request/account_create_request.dart';
 import '../models/request/account_update_request.dart';
 import '../models/response/account_history_response.dart';
 
+@injectable
 class BankAccountRepositoryImpl implements BankAccountRepository {
   BankAccountRepositoryImpl(this._apiService);
   final ApiService _apiService;

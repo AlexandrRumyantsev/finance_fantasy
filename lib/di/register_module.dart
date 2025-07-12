@@ -12,7 +12,10 @@ abstract class RegisterModule {
   AppDatabase get database => AppDatabase(NativeDatabase.memory());
 
   @lazySingleton
-  Dio get dio => API.dio;
+  Dio get dio {
+    API.initialize();
+    return API.dio;
+  }
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();

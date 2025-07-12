@@ -17,8 +17,8 @@ import 'utils/theme_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
-  await configureDependencies();
   await workerManager.init();
+  await configureDependencies();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(getIt<SharedPrefsManager>()),
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<ConnectionWarningCubit>(),
       child: BlocListener<ConnectionWarningCubit, ConnectionWarningState>(
-        listener: (context, state) { },
+        listener: (context, state) {},
         child: MaterialApp(
           navigatorKey: NavigationManager.navigatorKey,
           theme: ThemeData.light().copyWith(
