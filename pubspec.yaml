@@ -29,7 +29,8 @@ dependencies:
   get_it: ^8.0.3
   injectable: ^2.5.0
   fuzzy: ^0.5.1
-
+  connectivity_plus: ^6.1.4
+  worker_manager: ^7.2.6
 
 dev_dependencies:
   flutter_test:

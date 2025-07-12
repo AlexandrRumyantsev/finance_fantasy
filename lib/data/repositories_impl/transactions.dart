@@ -6,14 +6,14 @@ import '../../../domain/entities/transaction_short.dart';
 import '../../../domain/repositories/transactions.dart';
 import '../../../utils/either.dart';
 import '../../domain/entities/transaction_params.dart';
-import '../data_source/rest/transactions.dart';
+import '../data_source/rest/api_service.dart';
 import '../mappers/transaction.dart';
 import '../models/request/transaction_request.dart';
 
 class TransactionRepositoryImpl implements TransactionRepository {
-  TransactionRepositoryImpl(this._client);
+  TransactionRepositoryImpl(this._apiService);
 
-  final TransactionsClient _client;
+  final ApiService _apiService;
 
   @override
   Future<Either<BaseError, TransactionBrief>> createTransaction({
@@ -27,7 +27,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
         transactionDate: transaction.transactionDate,
         comment: transaction.comment,
       );
-      final response = await _client.createTransaction(request);
+      final response = await _apiService.createTransaction(request);
       return Right(response.toDomain());
     } catch (e) {
       return Left(BaseError(message: e.toString()));
@@ -39,7 +39,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     required int transactionId,
   }) async {
     try {
-      await _client.deleteTransaction(transactionId);
+      await _apiService.deleteTransaction(transactionId);
       return const Right(true);
     } catch (e) {
       return Left(BaseError(message: e.toString()));
@@ -49,9 +49,13 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<Either<BaseError, TransactionExtended>> getTransactionById({
     required int transactionId,
-  }) {
-    // TODO: implement getTransactionById
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await _apiService.getTransactionById(transactionId);
+      return Right(response.toDomain());
+    } catch (e) {
+      return Left(BaseError(message: e.toString()));
+    }
   }
 
   @override
@@ -64,7 +68,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       final formatter = DateFormat('yyyy-MM-dd');
       final fromDate = from != null ? formatter.format(from) : null;
       final toDate = to != null ? formatter.format(to) : null;
-      final response = await _client.getTransactionsByPeriod(
+      final response = await _apiService.getTransactionsByPeriod(
         accountId,
         fromDate,
         toDate,
@@ -88,7 +92,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
         transactionDate: transaction.transactionDate,
         comment: transaction.comment,
       );
-      final response = await _client.updateTransaction(
+      final response = await _apiService.updateTransaction(
         transactionId,
         request,
       );

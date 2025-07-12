@@ -2,19 +2,18 @@ import '../../../domain/entities/category.dart';
 import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/categories.dart';
 import '../../../utils/either.dart';
-import '../data_source/rest/categories.dart';
+import '../data_source/rest/api_service.dart';
 import '../mappers/category.dart';
 
-
 class CategoriesRepositoryImpl implements CategoriesRepository {
-  CategoriesRepositoryImpl(this._client);
+  CategoriesRepositoryImpl(this._apiService);
 
-  final CategoriesClient _client;
+  final ApiService _apiService;
 
   @override
   Future<Either<BaseError, List<Category>>> getCategories() async {
     try {
-      final response = await _client.getCategories();
+      final response = await _apiService.getCategories();
       return Right(response.map((e) => e.toDomain()).toList());
     } catch (e) {
       return Left(BaseError(message: e.toString()));
@@ -26,7 +25,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
     required bool isIncome,
   }) async {
     try {
-      final response = await _client.getCategoriesByType(isIncome);
+      final response = await _apiService.getCategoriesByType(isIncome);
       return Right(response.map((e) => e.toDomain()).toList());
     } catch (e) {
       return Left(BaseError(message: e.toString()));

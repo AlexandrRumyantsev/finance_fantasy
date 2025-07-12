@@ -27,7 +27,7 @@ class _SummaryPageState<C extends BaseSummaryCubit>
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<C>();
-    final isIncome = context.read<C>() is IncomesSummaryCubit;
+    final isIncome = cubit is IncomesSummaryCubit;
     return Scaffold(
       body: BlocBuilder<C, SummaryState>(
         builder: (context, state) {
