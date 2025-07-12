@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../data/data_source/rest/api_client.dart';
+import '../../data/data_source/rest/api_service.dart';
 import '../../data/repositories_impl/transactions.dart';
 import '../../utils/either.dart';
 import '../entities/error.dart';
@@ -11,7 +11,7 @@ import '../entities/transaction_short.dart';
 @singleton
 abstract interface class TransactionRepository {
   @factoryMethod
-  factory TransactionRepository(ApiClient client) =>
+  factory TransactionRepository(ApiService client) =>
       TransactionRepositoryImpl(client);
 
   Future<Either<BaseError, TransactionBrief>> createTransaction({

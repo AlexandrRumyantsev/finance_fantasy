@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'interceptor.dart';
+import 'retry_interceptor.dart';
 
 class API {
   static final Dio dio = Dio(
@@ -11,5 +12,8 @@ class API {
         'Content-Type': 'application/json',
       },
     ),
-  )..interceptors.add(AuthInterceptor());
+  )..interceptors.addAll([
+      AuthInterceptor(),
+      RetryInterceptor(dio: dio),
+    ]);
 }

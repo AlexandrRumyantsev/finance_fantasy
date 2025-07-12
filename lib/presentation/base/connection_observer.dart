@@ -17,12 +17,10 @@ abstract class ConnectionObserverCubit<State> extends Cubit<State> {
   Future<bool> get hasConnection => _manager.hasInternetConnection;
 
   ConnectionObserverCubit(super.initialState) {
-    print('ConnectionObserverCubit constructor');
     init();
   }
 
   void init() {
-    print('init called');
     _subscription =
         _manager.hasInternetConnectionStream.listen((hasConnection) {
       if (hasConnection) {
