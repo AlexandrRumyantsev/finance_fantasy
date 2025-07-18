@@ -13,14 +13,8 @@ class SettingsPage extends StatelessWidget {
       backgroundColor: appColors.background,
       body: CustomScrollView(
         slivers: [
-          CommonFinanceAppBar(
+          const CommonFinanceAppBar(
             title: 'Настройки',
-            prefix: Icon(
-              Icons.arrow_back_ios,
-              color: appColors.text,
-              size: 20,
-            ),
-            onPrefixPressed: () => Navigator.of(context).pop(),
           ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
