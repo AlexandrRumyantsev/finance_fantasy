@@ -1,46 +1,48 @@
 import 'package:flutter/material.dart';
 
-import '../infrastructure/managers/shared_prefs.dart';
+import '../infrastructure/managers/settings_manager.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeProvider(this._sharedPrefsManager) {
+  ThemeProvider(this._settingsManager) {
     _loadTheme();
+    _loadPrimaryColor();
   }
 
-  final SharedPrefsManager _sharedPrefsManager;
+  final SettingsManager _settingsManager;
 
   ThemeMode _themeMode = ThemeMode.system;
+  Color _primaryColor = Colors.green;
 
   ThemeMode get themeMode => _themeMode;
+  Color get primaryColor => _primaryColor;
 
-  void toggleTheme(bool isDark) {
-    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+  void setThemeMode(ThemeMode themeMode) {
+    _themeMode = themeMode;
     _saveTheme();
     notifyListeners();
   }
 
-  void setSystemTheme() {
-    _themeMode = ThemeMode.system;
-    _saveTheme();
+  void setPrimaryColor(Color color) {
+    _primaryColor = color;
+    _savePrimaryColor();
     notifyListeners();
   }
 
   Future<void> _loadTheme() async {
-    final themeString = _sharedPrefsManager.getThemeMode();
-    switch (themeString) {
-      case ThemeMode.light:
-        _themeMode = ThemeMode.light;
-        break;
-      case ThemeMode.dark:
-        _themeMode = ThemeMode.dark;
-        break;
-      default:
-        _themeMode = ThemeMode.system;
-    }
+    _themeMode = _settingsManager.getThemeMode();
+    notifyListeners();
+  }
+
+  Future<void> _loadPrimaryColor() async {
+    _primaryColor = _settingsManager.getPrimaryColor();
     notifyListeners();
   }
 
   Future<void> _saveTheme() async {
-    await _sharedPrefsManager.setThemeMode(_themeMode);
+    await _settingsManager.setThemeMode(_themeMode);
+  }
+
+  Future<void> _savePrimaryColor() async {
+    await _settingsManager.setPrimaryColor(_primaryColor);
   }
 }

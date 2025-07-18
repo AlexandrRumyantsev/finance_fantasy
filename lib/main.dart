@@ -6,12 +6,13 @@ import 'package:worker_manager/worker_manager.dart';
 
 import 'di/injection.dart';
 import 'infrastructure/managers/manager.dart';
-import 'infrastructure/managers/shared_prefs.dart';
+import 'infrastructure/managers/settings_manager.dart';
 import 'presentation/components/connection_warning/logic/cubit.dart';
 import 'presentation/splash/splash.dart';
 import 'utils/colors.dart';
 import 'utils/theme_extensions.dart';
 import 'utils/theme_provider.dart';
+import 'utils/settings_provider.dart';
 
 /// Entry point of the application
 void main() async {
@@ -20,8 +21,15 @@ void main() async {
   await workerManager.init();
   await configureDependencies();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(getIt<SharedPrefsManager>()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(getIt<SettingsManager>()),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SettingsProvider(getIt<SettingsManager>()),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
