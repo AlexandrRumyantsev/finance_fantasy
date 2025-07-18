@@ -4,8 +4,7 @@ import '../infrastructure/managers/settings_manager.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeProvider(this._settingsManager) {
-    _loadTheme();
-    _loadPrimaryColor();
+    _initialize();
   }
 
   final SettingsManager _settingsManager;
@@ -35,7 +34,6 @@ class ThemeProvider extends ChangeNotifier {
 
   Future<void> _loadPrimaryColor() async {
     _primaryColor = _settingsManager.getPrimaryColor();
-    notifyListeners();
   }
 
   Future<void> _saveTheme() async {
@@ -44,5 +42,11 @@ class ThemeProvider extends ChangeNotifier {
 
   Future<void> _savePrimaryColor() async {
     await _settingsManager.setPrimaryColor(_primaryColor);
+  }
+
+  Future<void> _initialize() async {
+    await _loadTheme();
+    await _loadPrimaryColor();
+    notifyListeners();
   }
 }

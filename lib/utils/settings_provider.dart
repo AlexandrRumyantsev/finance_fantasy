@@ -68,4 +68,21 @@ class SettingsProvider extends ChangeNotifier {
       return [];
     }
   }
+
+  Future<String?> getPinCode() {
+    return _settingsManager.getPinCode();
+  }
+
+  Future<void> setPinCode(String pinCode) async {
+    await _settingsManager.setPinCode(pinCode);
+  }
+
+  Future<void> removePinCode() async {
+    await _settingsManager.removePinCode();
+  }
+
+  Future<bool> isPinCodeSet() async {
+    final pinCode = await _settingsManager.getPinCode();
+    return pinCode != null && pinCode.isNotEmpty;
+  }
 }

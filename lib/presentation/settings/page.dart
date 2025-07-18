@@ -55,9 +55,13 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(BuildContext context, String title, List<Widget> children) {
+  Widget _buildSection(
+    BuildContext context,
+    String title,
+    List<Widget> children,
+  ) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,7 +89,7 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildThemeTile(BuildContext context, ThemeProvider themeProvider) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     return ListTile(
       leading: Icon(Icons.brightness_6, color: appColors.primary),
       title: const Text('Тема'),
@@ -104,7 +108,7 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildColorTile(BuildContext context, ThemeProvider themeProvider) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     return ListTile(
       leading: Icon(Icons.palette, color: appColors.primary),
       title: const Text('Основной цвет'),
@@ -122,21 +126,40 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPinCodeTile(BuildContext context, SettingsProvider settingsProvider) {
+  Widget _buildPinCodeTile(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
-    return ListTile(
-      leading: Icon(Icons.lock_outline, color: appColors.primary),
-      title: const Text('PIN-код'),
-      subtitle: const Text('Защита приложения'),
-      trailing: Icon(Icons.chevron_right, color: appColors.chevronRight),
-      onTap: () => _showPinCodeDialog(context, settingsProvider),
+
+    return FutureBuilder<bool>(
+      future: settingsProvider.isPinCodeSet(),
+      builder: (context, snapshot) {
+        final isPinSet = snapshot.data ?? false;
+
+        return ListTile(
+          leading: Icon(Icons.lock_outline, color: appColors.primary),
+          title: const Text('PIN-код'),
+          subtitle: Text(isPinSet ? 'PIN-код установлен' : 'Защита приложения'),
+          trailing: isPinSet
+              ? Switch(
+                  value: true,
+                  onChanged: (value) =>
+                      _showDisablePinDialog(context, settingsProvider),
+                )
+              : Icon(Icons.chevron_right, color: appColors.chevronRight),
+          onTap: () => _showPinCodeDialog(context, settingsProvider),
+        );
+      },
     );
   }
 
-  Widget _buildBiometricTile(BuildContext context, SettingsProvider settingsProvider) {
+  Widget _buildBiometricTile(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     return ListTile(
       leading: Icon(Icons.fingerprint, color: appColors.primary),
       title: const Text('Биометрия'),
@@ -148,9 +171,12 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHapticTile(BuildContext context, SettingsProvider settingsProvider) {
+  Widget _buildHapticTile(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     return ListTile(
       leading: Icon(Icons.vibration, color: appColors.primary),
       title: const Text('Хаптики'),
@@ -162,9 +188,12 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLanguageTile(BuildContext context, SettingsProvider settingsProvider) {
+  Widget _buildLanguageTile(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     return ListTile(
       leading: Icon(Icons.language, color: appColors.primary),
       title: const Text('Язык'),
@@ -198,7 +227,7 @@ class SettingsPage extends StatelessWidget {
 
   void _showThemeDialog(BuildContext context, ThemeProvider themeProvider) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -242,7 +271,7 @@ class SettingsPage extends StatelessWidget {
 
   void _showColorPicker(BuildContext context, ThemeProvider themeProvider) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -270,12 +299,17 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _showPinCodeDialog(BuildContext context, SettingsProvider settingsProvider) {
+  void _showPinCodeDialog(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PinCodePage(
+          key: const ValueKey('pin_code_page'),
           isSetup: true,
-          onSuccess: () {
+          onSuccess: (pinCode) async {
+            await settingsProvider.setPinCode(pinCode);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('PIN-код установлен')),
@@ -287,9 +321,50 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _showLanguageDialog(BuildContext context, SettingsProvider settingsProvider) {
+  void _showDisablePinDialog(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     final appColors = Theme.of(context).extension<AppColors>()!;
-    
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: appColors.surfaceContainer,
+        title: const Text('Отключить PIN-код'),
+        content: const Text(
+          'Вы уверены, что хотите отключить PIN-код? '
+          'Приложение больше не будет требовать ввода PIN-кода при запуске.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Отмена'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await settingsProvider.removePinCode();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('PIN-код отключен')),
+              );
+            },
+            child: const Text(
+              'Отключить',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLanguageDialog(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

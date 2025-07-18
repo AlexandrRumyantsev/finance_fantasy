@@ -49,14 +49,14 @@ class MyApp extends StatelessWidget {
           navigatorKey: NavigationManager.navigatorKey,
           theme: ThemeData.light().copyWith(
             extensions: <ThemeExtension<dynamic>>[
-              AppColors.light(),
+              AppColors.lightWithCustomPrimary(themeProvider.primaryColor),
             ],
             datePickerTheme: ThemeDataExtensions.lightDatePickerTheme,
             timePickerTheme: ThemeDataExtensions.lightTimePickerTheme,
           ),
           darkTheme: ThemeData.dark().copyWith(
             extensions: <ThemeExtension<dynamic>>[
-              AppColors.dark(),
+              AppColors.darkWithCustomPrimary(themeProvider.primaryColor),
             ],
             datePickerTheme: ThemeDataExtensions.darkDatePickerTheme,
             timePickerTheme: ThemeDataExtensions.darkTimePickerTheme,

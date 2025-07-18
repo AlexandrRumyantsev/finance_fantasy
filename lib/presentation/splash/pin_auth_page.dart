@@ -1,51 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/colors.dart';
+import '../../utils/settings_provider.dart';
+import '../home/home.dart';
 
-class PinCodePage extends StatefulWidget {
-  final bool isSetup;
-  final Function(String)? onSuccess;
-  final VoidCallback? onCancel;
-
-  const PinCodePage({
-    super.key,
-    this.isSetup = false,
-    this.onSuccess,
-    this.onCancel,
-  });
+class PinAuthPage extends StatefulWidget {
+  const PinAuthPage({super.key});
 
   @override
-  State<PinCodePage> createState() => _PinCodePageState();
+  State<PinAuthPage> createState() => _PinAuthPageState();
 }
 
-class _PinCodePageState extends State<PinCodePage> {
+class _PinAuthPageState extends State<PinAuthPage> {
   final List<String> _pin = [];
-  final List<String> _confirmPin = [];
-  bool _isConfirming = false;
   bool _isError = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColors>();
-
-    // Fallback colors if AppColors is not available
     final colors = appColors ?? AppColors.light();
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        backgroundColor: colors.primary,
-        foregroundColor: colors.text,
-        title: Text(widget.isSetup ? 'Установка PIN-кода' : 'Введите PIN-код'),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(height: 60),
               Icon(
                 Icons.lock_outline,
                 size: 80,
@@ -53,7 +38,7 @@ class _PinCodePageState extends State<PinCodePage> {
               ),
               const SizedBox(height: 24),
               Text(
-                _getTitle(),
+                'Введите PIN-код',
                 style: theme.textTheme.headlineSmall?.copyWith(
                   color: colors.text,
                   fontWeight: FontWeight.w600,
@@ -62,7 +47,7 @@ class _PinCodePageState extends State<PinCodePage> {
               ),
               const SizedBox(height: 16),
               Text(
-                _getSubtitle(),
+                'Введите 4-значный PIN-код для входа в приложение',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.unselectedButtonNavBar,
                 ),
@@ -73,6 +58,16 @@ class _PinCodePageState extends State<PinCodePage> {
               const SizedBox(height: 40),
               _buildNumpad(),
               const Spacer(),
+              if (_isLoading)
+                const CircularProgressIndicator()
+              else
+                TextButton(
+                  onPressed: _onForgotPin,
+                  child: Text(
+                    'Забыли PIN-код?',
+                    style: TextStyle(color: colors.primary),
+                  ),
+                ),
             ],
           ),
         ),
@@ -80,32 +75,15 @@ class _PinCodePageState extends State<PinCodePage> {
     );
   }
 
-  String _getTitle() {
-    if (widget.isSetup) {
-      return _isConfirming ? 'Подтвердите PIN-код' : 'Создайте PIN-код';
-    }
-    return 'Введите PIN-код';
-  }
-
-  String _getSubtitle() {
-    if (widget.isSetup) {
-      return _isConfirming
-          ? 'Повторите введенный PIN-код'
-          : 'Введите 4-значный PIN-код для защиты приложения';
-    }
-    return 'Введите 4-значный PIN-код';
-  }
-
   Widget _buildPinDots() {
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColors>();
     final colors = appColors ?? AppColors.light();
-    final currentPin = _isConfirming ? _confirmPin : _pin;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(4, (index) {
-        final isFilled = index < currentPin.length;
+        final isFilled = index < _pin.length;
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 8),
           width: 20,
@@ -204,76 +182,91 @@ class _PinCodePageState extends State<PinCodePage> {
       setState(() {
         _isError = false;
         _pin.clear();
-        _confirmPin.clear();
-        _isConfirming = false;
       });
     }
 
     setState(() {
-      if (_isConfirming) {
-        if (_confirmPin.length < 4) {
-          _confirmPin.add(number);
-        }
-      } else {
-        if (_pin.length < 4) {
-          _pin.add(number);
-        }
+      if (_pin.length < 4) {
+        _pin.add(number);
       }
     });
 
-    _checkPinComplete();
+    if (_pin.length == 4) {
+      _verifyPin();
+    }
   }
 
   void _onBackspacePressed() {
     setState(() {
-      if (_isConfirming) {
-        if (_confirmPin.isNotEmpty) {
-          _confirmPin.removeLast();
-        }
-      } else {
-        if (_pin.isNotEmpty) {
-          _pin.removeLast();
-        }
+      if (_pin.isNotEmpty) {
+        _pin.removeLast();
       }
     });
   }
 
-  void _checkPinComplete() {
-    if (_isConfirming) {
-      if (_confirmPin.length == 4) {
-        if (_pin.join() == _confirmPin.join()) {
-          _onPinSuccess();
-        } else {
-          _onPinError();
-        }
-      }
-    } else {
-      if (_pin.length == 4) {
-        if (widget.isSetup) {
-          setState(() {
-            _isConfirming = true;
-          });
-        } else {
-          _onPinSuccess();
-        }
+  Future<void> _verifyPin() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
+    final savedPin = await settingsProvider.getPinCode();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (mounted) {
+      if (savedPin == _pin.join()) {
+        // PIN верный, переходим в приложение
+        await Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const HomePage(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
+      } else {
+        // PIN неверный
+        setState(() {
+          _isError = true;
+          _isLoading = false;
+        });
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            setState(_pin.clear);
+          }
+        });
       }
     }
   }
 
-  void _onPinSuccess() {
-    final pinCode = _pin.join();
-    widget.onSuccess?.call(pinCode);
-  }
-
-  void _onPinError() {
-    setState(() {
-      _isError = true;
-    });
-
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        setState(_confirmPin.clear);
-      }
-    });
+  void _onForgotPin() {
+    // Показываем диалог для сброса PIN-кода
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Сброс PIN-кода'),
+        content: const Text(
+          'Для сброса PIN-кода необходимо переустановить приложение. '
+          'Все данные будут удалены.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: Navigator.of(context).pop,
+            child: const Text('Отмена'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              // Здесь можно добавить логику для сброса PIN-кода
+              // или перехода к настройкам
+            },
+            child: const Text('Сбросить'),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -51,6 +51,34 @@ class AppColors extends ThemeExtension<AppColors> {
     );
   }
 
+  factory AppColors.lightWithCustomPrimary(Color primaryColor) {
+    return AppColors._(
+      primary: primaryColor,
+      secondary: Color.lerp(primaryColor, Colors.white, 0.9)!,
+      chevronRight: const Color(0xFF3C434D),
+      unselectedButtonNavBar: const Color(0xFF49454F),
+      text: const Color(0xFF1D1B20),
+      divider: const Color(0xFFCAC4D0),
+      deleteButton: const Color(0xFFE46962),
+      background: const Color(0xFFFFFFFF),
+      surfaceContainer: const Color(0xFFF3EDF7),
+    );
+  }
+
+  factory AppColors.darkWithCustomPrimary(Color primaryColor) {
+    return AppColors._(
+      primary: primaryColor,
+      secondary: Color.lerp(primaryColor, Colors.black, 0.8)!,
+      chevronRight: const Color(0xFF3C434D),
+      unselectedButtonNavBar: const Color(0xFF1F1C22),
+      text: const Color(0xFFFFFFFF),
+      divider: const Color(0xFFCAC4D0),
+      deleteButton: const Color(0xFFEF7C76),
+      background: const Color(0xFF121212),
+      surfaceContainer: const Color(0xFF1E1E1E),
+    );
+  }
+
   @override
   AppColors copyWith({
     Color? primary,
