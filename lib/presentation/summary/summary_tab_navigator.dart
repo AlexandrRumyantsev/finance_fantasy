@@ -18,11 +18,6 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final title = isExpense
-        ? (l10n?.expensesToday ?? 'Расходы сегодня')
-        : (l10n?.incomesToday ?? 'Доходы сегодня');
-
     return Navigator(
       onGenerateRoute: (settings) {
         if (settings.name == '/history') {
@@ -43,7 +38,7 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
                 ? getIt<ExpenseSummaryCubit>()
                 : getIt<IncomesSummaryCubit>(),
             child: SummaryPage<C>(
-              title: title,
+              title: _getTitle(context),
               onSuffixPressed: () {
                 Navigator.of(context).pushNamed('/history');
               },
@@ -52,5 +47,12 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _getTitle(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return isExpense
+        ? (l10n?.expensesToday ?? 'Расходы сегодня')
+        : (l10n?.incomesToday ?? 'Доходы сегодня');
   }
 }

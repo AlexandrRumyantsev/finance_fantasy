@@ -49,42 +49,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final localeProvider = Provider.of<LocaleProvider>(context);
 
     return BlocProvider(
       create: (context) => getIt<ConnectionWarningCubit>(),
       child: BlocListener<ConnectionWarningCubit, ConnectionWarningState>(
         listener: (context, state) {},
-        child: MaterialApp(
-          navigatorKey: NavigationManager.navigatorKey,
-          locale: localeProvider.locale,
-          supportedLocales: const [
-            Locale('ru'),
-            Locale('en'),
-          ],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          theme: ThemeData.light().copyWith(
-            extensions: <ThemeExtension<dynamic>>[
-              AppColors.lightWithCustomPrimary(themeProvider.primaryColor),
-            ],
-            datePickerTheme: ThemeDataExtensions.lightDatePickerTheme,
-            timePickerTheme: ThemeDataExtensions.lightTimePickerTheme,
-          ),
-          darkTheme: ThemeData.dark().copyWith(
-            extensions: <ThemeExtension<dynamic>>[
-              AppColors.darkWithCustomPrimary(themeProvider.primaryColor),
-            ],
-            datePickerTheme: ThemeDataExtensions.darkDatePickerTheme,
-            timePickerTheme: ThemeDataExtensions.darkTimePickerTheme,
-          ),
-          themeMode: themeProvider.themeMode,
-          debugShowCheckedModeBanner: false,
-          home: const SplashPage(),
+        child: Consumer<LocaleProvider>(
+          builder: (context, localeProvider, child) {
+            return MaterialApp(
+              navigatorKey: NavigationManager.navigatorKey,
+              locale: localeProvider.locale,
+              supportedLocales: const [
+                Locale('ru'),
+                Locale('en'),
+              ],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              theme: ThemeData.light().copyWith(
+                extensions: <ThemeExtension<dynamic>>[
+                  AppColors.lightWithCustomPrimary(themeProvider.primaryColor),
+                ],
+                datePickerTheme: ThemeDataExtensions.lightDatePickerTheme,
+                timePickerTheme: ThemeDataExtensions.lightTimePickerTheme,
+              ),
+              darkTheme: ThemeData.dark().copyWith(
+                extensions: <ThemeExtension<dynamic>>[
+                  AppColors.darkWithCustomPrimary(themeProvider.primaryColor),
+                ],
+                datePickerTheme: ThemeDataExtensions.darkDatePickerTheme,
+                timePickerTheme: ThemeDataExtensions.darkTimePickerTheme,
+              ),
+              themeMode: themeProvider.themeMode,
+              debugShowCheckedModeBanner: false,
+              home: const SplashPage(),
+            );
+          },
         ),
       ),
     );
