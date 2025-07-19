@@ -142,8 +142,6 @@ class _BankAccountSelectionItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-
-            // Информация о счете
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,8 +164,6 @@ class _BankAccountSelectionItem extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Иконка стрелки
             Icon(
               Icons.chevron_right,
               color: appColors.chevronRight,

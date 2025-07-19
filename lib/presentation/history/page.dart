@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 part of 'history.dart';
 
 class HistoryPage<C extends BaseSummaryCubit> extends StatefulWidget {

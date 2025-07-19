@@ -5,7 +5,6 @@ import '../infrastructure/managers/settings_manager.dart';
 
 class SettingsProvider extends ChangeNotifier {
   SettingsProvider(this._settingsManager) {
-    // Инициализируем синхронно, а затем загружаем настройки
     _loadSettings();
   }
 
@@ -29,7 +28,6 @@ class SettingsProvider extends ChangeNotifier {
       _language = _settingsManager.getLanguage();
       _isBiometricAvailable = await _localAuth.canCheckBiometrics;
     } catch (e) {
-      // Устанавливаем значения по умолчанию
       _hapticEnabled = true;
       _biometricEnabled = false;
       _language = 'ru';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/app_localizations.dart';
 import '../../utils/colors.dart';
 import '../../utils/settings_provider.dart';
-import '../../utils/app_localizations.dart';
 import '../home/home.dart';
 
 class PinAuthPage extends StatefulWidget {
@@ -220,7 +220,6 @@ class _PinAuthPageState extends State<PinAuthPage> {
 
     if (mounted) {
       if (savedPin == _pin.join()) {
-        // PIN верный, переходим в приложение
         await Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -230,7 +229,6 @@ class _PinAuthPageState extends State<PinAuthPage> {
           ),
         );
       } else {
-        // PIN неверный
         setState(() {
           _isError = true;
           _isLoading = false;
@@ -246,7 +244,6 @@ class _PinAuthPageState extends State<PinAuthPage> {
   }
 
   void _onForgotPin() {
-    // Показываем диалог для сброса PIN-кода
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -255,6 +252,7 @@ class _PinAuthPageState extends State<PinAuthPage> {
         ),
         content: Text(
           AppLocalizations.of(context)?.resetPinCodeDescription ??
+              // ignore: lines_longer_than_80_chars
               'To reset PIN code, you need to reinstall the app. All data will be deleted.',
         ),
         actions: [
@@ -265,8 +263,6 @@ class _PinAuthPageState extends State<PinAuthPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // Здесь можно добавить логику для сброса PIN-кода
-              // или перехода к настройкам
             },
             child: Text(AppLocalizations.of(context)?.reset ?? 'Reset'),
           ),

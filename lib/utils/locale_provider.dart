@@ -6,7 +6,6 @@ import 'settings_provider.dart';
 class LocaleProvider extends ChangeNotifier {
   LocaleProvider(this._settingsProvider) {
     _loadLocale();
-    // Слушаем изменения в SettingsProvider
     _settingsProvider.addListener(_onSettingsChanged);
   }
 
@@ -26,7 +25,6 @@ class LocaleProvider extends ChangeNotifier {
   }
 
   void _onSettingsChanged() {
-    // Обновляем локаль при изменении языка в настройках
     final languageCode = _settingsProvider.language;
     if (_locale.languageCode != languageCode) {
       _locale = Locale(languageCode);
@@ -36,7 +34,6 @@ class LocaleProvider extends ChangeNotifier {
 
   Future<void> setLocale(String languageCode) async {
     await _settingsProvider.setLanguage(languageCode);
-    // _onSettingsChanged() будет вызван автоматически через listener
   }
 
   Future<void> refreshLocale() async {

@@ -63,7 +63,6 @@ class _SplashPageState extends State<SplashPage>
 
     if (mounted) {
       if (pinCode != null && pinCode.isNotEmpty) {
-        // PIN-код установлен, показываем экран ввода
         await Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -73,7 +72,6 @@ class _SplashPageState extends State<SplashPage>
           ),
         );
       } else {
-        // PIN-код не установлен, переходим в приложение
         await Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -140,7 +138,6 @@ class _SplashPageState extends State<SplashPage>
                       ),
                     ),
                     const SizedBox(height: 8),
-                    // Подзаголовок
                     Text(
                       'Manage your finances',
                       style: TextStyle(
@@ -150,7 +147,6 @@ class _SplashPageState extends State<SplashPage>
                       ),
                     ),
                     const SizedBox(height: 48),
-                    // Индикатор загрузки
                     SizedBox(
                       width: 40,
                       height: 40,

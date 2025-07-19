@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
 import '../../utils/app_localizations.dart';
+import '../../utils/colors.dart';
 
 class PinCodePage extends StatefulWidget {
   final bool isSetup;
@@ -30,7 +30,6 @@ class _PinCodePageState extends State<PinCodePage> {
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColors>();
 
-    // Fallback colors if AppColors is not available
     final colors = appColors ?? AppColors.light();
 
     return Scaffold(
@@ -38,9 +37,12 @@ class _PinCodePageState extends State<PinCodePage> {
       appBar: AppBar(
         backgroundColor: colors.primary,
         foregroundColor: colors.text,
-        title: Text(widget.isSetup
-            ? (AppLocalizations.of(context)?.pinCodeSetup ?? 'PIN Code Setup')
-            : (AppLocalizations.of(context)?.enterPinCode ?? 'Enter PIN Code')),
+        title: Text(
+          widget.isSetup
+              ? (AppLocalizations.of(context)?.pinCodeSetup ?? 'PIN Code Setup')
+              : (AppLocalizations.of(context)?.enterPinCode ??
+                  'Enter PIN Code'),
+        ),
         elevation: 0,
       ),
       body: SafeArea(

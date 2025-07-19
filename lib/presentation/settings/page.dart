@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, lines_longer_than_80_chars
+
 part of 'settings.dart';
 
 class SettingsPage extends StatelessWidget {

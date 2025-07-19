@@ -10,7 +10,6 @@ class SettingsManager {
 
   SettingsManager(this._prefs, this._secureStorage);
 
-  // Theme settings
   Future<void> setThemeMode(ThemeMode themeMode) async {
     await _prefs.setString('theme_mode', themeMode.name);
   }
@@ -29,9 +28,8 @@ class SettingsManager {
     }
   }
 
-  // Color settings
   Future<void> setPrimaryColor(Color color) async {
-    await _prefs.setInt('primary_color', color.value);
+    await _prefs.setInt('primary_color', color.r.toInt());
   }
 
   Color getPrimaryColor() {
@@ -39,7 +37,6 @@ class SettingsManager {
     return colorValue != null ? Color(colorValue) : Colors.green;
   }
 
-  // Haptic feedback settings
   Future<void> setHapticEnabled(bool enabled) async {
     await _prefs.setBool('haptic_enabled', enabled);
   }
@@ -48,7 +45,6 @@ class SettingsManager {
     return _prefs.getBool('haptic_enabled') ?? true;
   }
 
-  // PIN code settings
   Future<void> setPinCode(String pinCode) async {
     await _secureStorage.write(key: 'pin_code', value: pinCode);
   }
@@ -61,7 +57,6 @@ class SettingsManager {
     await _secureStorage.delete(key: 'pin_code');
   }
 
-  // Biometric settings
   Future<void> setBiometricEnabled(bool enabled) async {
     await _prefs.setBool('biometric_enabled', enabled);
   }
@@ -70,7 +65,6 @@ class SettingsManager {
     return _prefs.getBool('biometric_enabled') ?? false;
   }
 
-  // Language settings
   Future<void> setLanguage(String languageCode) async {
     await _prefs.setString('language_code', languageCode);
   }

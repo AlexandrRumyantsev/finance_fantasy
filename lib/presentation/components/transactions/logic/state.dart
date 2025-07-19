@@ -64,7 +64,6 @@ class TransactionEditState extends Equatable {
 
   bool get isNewTransaction => transactionId == null;
 
-  // Получить только дату (без времени)
   DateTime? get dateOnly {
     final date = transactionDate;
     if (date == null) return null;
@@ -75,7 +74,6 @@ class TransactionEditState extends Equatable {
     );
   }
 
-  // Получить только время
   TimeOfDay? get timeOfDay {
     final date = transactionDate;
     if (date == null) return null;
@@ -85,7 +83,6 @@ class TransactionEditState extends Equatable {
     );
   }
 
-  // Создать новый DateTime, объединив существующую дату с новым временем
   DateTime? combineWithTime(TimeOfDay time) {
     final date = transactionDate;
     if (date == null) return null;
@@ -98,7 +95,6 @@ class TransactionEditState extends Equatable {
     );
   }
 
-  // Создать новый DateTime, объединив новую дату с существующим временем
   DateTime? combineWithDate(DateTime date) {
     final currentDate = transactionDate;
     if (currentDate == null) return date;

@@ -17,7 +17,6 @@ import 'utils/settings_provider.dart';
 import 'utils/theme_extensions.dart';
 import 'utils/theme_provider.dart';
 
-/// Entry point of the application
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
