@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../utils/app_localizations.dart';
 import '../../../utils/colors.dart';
 import '../logic/cubit.dart';
 
@@ -44,7 +45,8 @@ class _CategoriesSearchBarState extends State<CategoriesSearchBar> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                hintText: 'Найти статью',
+                hintText: AppLocalizations.of(context)?.findCategory ??
+                    'Найти статью',
                 hintStyle: TextStyle(
                   color: appColors.text,
                   fontSize: 16,

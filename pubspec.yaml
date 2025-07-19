@@ -25,12 +25,18 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   intl: ^0.20.2
+  flutter_localizations:
+    sdk: flutter
   drift: ^2.27.0
   get_it: ^8.0.3
   injectable: ^2.5.0
   fuzzy: ^0.5.1
   connectivity_plus: ^6.1.4
   worker_manager: ^7.2.6
+  flutter_colorpicker: ^1.0.3
+  flutter_secure_storage: ^9.0.0
+  local_auth: ^2.1.8
+  flutter_haptic_feedback: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +61,7 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/icons/

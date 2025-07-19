@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 part of 'history.dart';
 
 class HistoryPage<C extends BaseSummaryCubit> extends StatefulWidget {
@@ -39,7 +41,8 @@ class _HistoryPageState<C extends BaseSummaryCubit>
             child: CustomScrollView(
               slivers: [
                 CommonFinanceAppBar(
-                  title: 'Моя история',
+                  title:
+                      AppLocalizations.of(context)?.myHistory ?? 'Моя история',
                   suffix: SvgPicture.asset(AppIcons.history),
                   prefix: const Icon(Icons.arrow_back),
                   onPrefixPressed: () => Navigator.of(context).pop(),
@@ -47,7 +50,7 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
-                    left: 'Начало',
+                    left: AppLocalizations.of(context)?.start ?? 'Начало',
                     right: state.dateRange?.start
                             .toLocal()
                             .toString()
@@ -70,7 +73,7 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
-                    left: 'Конец',
+                    left: AppLocalizations.of(context)?.end ?? 'Конец',
                     right: state.dateRange?.end
                             .toLocal()
                             .toString()
@@ -93,8 +96,9 @@ class _HistoryPageState<C extends BaseSummaryCubit>
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
-                    left: 'Сумма',
-                    right: '${state.totalAmount.toStringAsFixed(2)} RUB',
+                    left: AppLocalizations.of(context)?.amount ?? 'Сумма',
+                    right:
+                        '${state.totalAmount.toStringAsFixed(2)} ${AppLocalizations.of(context)?.currency ?? 'RUB'}',
                   ),
                 ),
                 CommonFinanceList<C>(

@@ -23,8 +23,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
         color: Theme.of(context).extension<AppColors>()?.primary,
         child: CustomScrollView(
           slivers: [
-            const CommonFinanceAppBar(
-              title: 'Мои статьи',
+            CommonFinanceAppBar(
+              title: AppLocalizations.of(context)?.myCategories ?? 'Мои статьи',
             ),
             const SliverPersistentHeader(
               pinned: true,

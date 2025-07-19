@@ -14,6 +14,8 @@ class AppNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColors>()!;
+    final l10n = AppLocalizations.of(context);
+
     final items = List.generate(
       iconPaths.length,
       (i) {
@@ -22,7 +24,7 @@ class AppNavigationBar extends StatelessWidget {
             onTap: () => _onNavBarTap(i),
             child: NavigationBarItem(
               assetPath: iconPaths[i],
-              label: labels[i],
+              label: labels[i](l10n),
               isSelected: i == _currentPage,
             ),
           ),
@@ -58,11 +60,12 @@ class AppNavigationBar extends StatelessWidget {
     AppIcons.categories,
     AppIcons.settings,
   ];
-  static const labels = [
-    'Расходы',
-    'Доходы',
-    'Счет',
-    'Статьи',
-    'Настройки',
-  ];
+
+  static List<String Function(AppLocalizations?)> get labels => [
+        (l10n) => l10n?.expenses ?? 'Расходы',
+        (l10n) => l10n?.incomes ?? 'Доходы',
+        (l10n) => l10n?.account ?? 'Счет',
+        (l10n) => l10n?.categories ?? 'Статьи',
+        (l10n) => l10n?.settings ?? 'Настройки',
+      ];
 }

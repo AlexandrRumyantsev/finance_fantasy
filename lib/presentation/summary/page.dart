@@ -44,7 +44,7 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
-                    left: 'Всего',
+                    left: AppLocalizations.of(context)?.total ?? 'Всего',
                     right: '${state.totalAmount.toStringAsFixed(2)} RUB',
                   ),
                 ),
@@ -59,6 +59,7 @@ class _SummaryPageState<C extends BaseSummaryCubit>
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'summary_fab_${isIncome ? 'income' : 'expense'}',
         onPressed: () {
           final isIncome = context.read<C>() is IncomesSummaryCubit;
           final title = isIncome ? 'Добавить доход' : 'Добавить расход';

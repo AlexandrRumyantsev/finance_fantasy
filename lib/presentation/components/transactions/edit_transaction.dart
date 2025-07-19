@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 part of '../components.dart';
 
 class ModalEditTransaction extends StatefulWidget {
@@ -55,8 +57,11 @@ class _ModalEditTransactionState extends State<ModalEditTransaction> {
                       Navigator.of(context).pop(true);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Ошибка при сохранении'),
+                        SnackBar(
+                          content: Text(
+                            AppLocalizations.of(context)?.saveError ??
+                                'Ошибка при сохранении',
+                          ),
                         ),
                       );
                     }

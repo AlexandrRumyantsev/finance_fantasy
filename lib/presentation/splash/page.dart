@@ -45,14 +45,7 @@ class _SplashPageState extends State<SplashPage>
 
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
-        Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const HomePage(),
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-          ),
-        );
+        _checkPinAndNavigate();
       }
     });
   }
@@ -61,6 +54,34 @@ class _SplashPageState extends State<SplashPage>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _checkPinAndNavigate() async {
+    final settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
+    final pinCode = await settingsProvider.getPinCode();
+
+    if (mounted) {
+      if (pinCode != null && pinCode.isNotEmpty) {
+        await Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const PinAuthPage(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
+      } else {
+        await Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const HomePage(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -117,9 +138,8 @@ class _SplashPageState extends State<SplashPage>
                       ),
                     ),
                     const SizedBox(height: 8),
-                    // Подзаголовок
                     Text(
-                      'Управляйте своими финансами',
+                      'Manage your finances',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white.withValues(alpha: 0.8),
@@ -127,7 +147,6 @@ class _SplashPageState extends State<SplashPage>
                       ),
                     ),
                     const SizedBox(height: 48),
-                    // Индикатор загрузки
                     SizedBox(
                       width: 40,
                       height: 40,

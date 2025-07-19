@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -54,20 +55,14 @@ class BalanceChart extends StatelessWidget {
               ),
             ),
             titlesData: FlTitlesData(
-              rightTitles: const AxisTitles(
-                
-              ),
-              topTitles: const AxisTitles(
-                
-              ),
+              rightTitles: const AxisTitles(),
+              topTitles: const AxisTitles(),
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
-                    // Показываем только 3 даты: начало, середина, конец
                     final dataLength = data.length;
                     if (value.toInt() == 0) {
-                      // Начало
                       final balanceData = data[0];
                       return Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -80,7 +75,6 @@ class BalanceChart extends StatelessWidget {
                         ),
                       );
                     } else if (value.toInt() == (dataLength - 1) / 2) {
-                      // Середина
                       final balanceData = data[value.toInt()];
                       return Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -93,7 +87,6 @@ class BalanceChart extends StatelessWidget {
                         ),
                       );
                     } else if (value.toInt() == dataLength - 1) {
-                      // Конец
                       final balanceData = data[dataLength - 1];
                       return Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -111,9 +104,7 @@ class BalanceChart extends StatelessWidget {
                   reservedSize: 30,
                 ),
               ),
-              leftTitles: const AxisTitles(
-                
-              ),
+              leftTitles: const AxisTitles(),
             ),
             borderData: FlBorderData(
               show: false,
