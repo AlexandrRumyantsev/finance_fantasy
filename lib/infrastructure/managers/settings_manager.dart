@@ -29,7 +29,7 @@ class SettingsManager {
   }
 
   Future<void> setPrimaryColor(Color color) async {
-    await _prefs.setInt('primary_color', color.r.toInt());
+    await _prefs.setInt('primary_color', color.value);
   }
 
   Color getPrimaryColor() {
