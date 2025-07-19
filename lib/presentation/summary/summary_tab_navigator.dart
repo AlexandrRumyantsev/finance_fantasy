@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../di/injection.dart';
+import '../../utils/app_localizations.dart';
 import '../history/history.dart';
 import 'logic/cubit.dart';
 import 'logic/expense/cubit.dart';
@@ -17,6 +18,11 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final title = isExpense
+        ? (l10n?.expensesToday ?? 'Расходы сегодня')
+        : (l10n?.incomesToday ?? 'Доходы сегодня');
+
     return Navigator(
       onGenerateRoute: (settings) {
         if (settings.name == '/history') {
@@ -37,7 +43,7 @@ class SummaryTabNavigator<C extends BaseSummaryCubit> extends StatelessWidget {
                 ? getIt<ExpenseSummaryCubit>()
                 : getIt<IncomesSummaryCubit>(),
             child: SummaryPage<C>(
-              title: isExpense ? 'Расходы сегодня' : 'Доходы сегодня',
+              title: title,
               onSuffixPressed: () {
                 Navigator.of(context).pushNamed('/history');
               },

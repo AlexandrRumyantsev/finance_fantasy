@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../di/injection.dart';
 import '../../utils/colors.dart';
 import '../../utils/icons.dart';
+import '../../utils/app_localizations.dart';
 import '../bank_account/bank_account.dart';
 import '../bank_account/logic/cubit.dart';
 import '../categories/categories.dart';

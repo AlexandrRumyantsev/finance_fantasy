@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/settings_provider.dart';
+import '../../utils/app_localizations.dart';
 import '../home/home.dart';
 
 class PinAuthPage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _PinAuthPageState extends State<PinAuthPage> {
               ),
               const SizedBox(height: 24),
               Text(
-                'Введите PIN-код',
+                AppLocalizations.of(context)?.enterPinCode ?? 'Enter PIN Code',
                 style: theme.textTheme.headlineSmall?.copyWith(
                   color: colors.text,
                   fontWeight: FontWeight.w600,
@@ -47,7 +48,8 @@ class _PinAuthPageState extends State<PinAuthPage> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Введите 4-значный PIN-код для входа в приложение',
+                AppLocalizations.of(context)?.enterPinCodeDescription ??
+                    'Enter 4-digit PIN code to access the app',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.unselectedButtonNavBar,
                 ),
@@ -64,7 +66,8 @@ class _PinAuthPageState extends State<PinAuthPage> {
                 TextButton(
                   onPressed: _onForgotPin,
                   child: Text(
-                    'Забыли PIN-код?',
+                    AppLocalizations.of(context)?.forgotPinCode ??
+                        'Forgot PIN code?',
                     style: TextStyle(color: colors.primary),
                   ),
                 ),
@@ -247,15 +250,17 @@ class _PinAuthPageState extends State<PinAuthPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Сброс PIN-кода'),
-        content: const Text(
-          'Для сброса PIN-кода необходимо переустановить приложение. '
-          'Все данные будут удалены.',
+        title: Text(
+          AppLocalizations.of(context)?.resetPinCode ?? 'Reset PIN Code',
+        ),
+        content: Text(
+          AppLocalizations.of(context)?.resetPinCodeDescription ??
+              'To reset PIN code, you need to reinstall the app. All data will be deleted.',
         ),
         actions: [
           TextButton(
             onPressed: Navigator.of(context).pop,
-            child: const Text('Отмена'),
+            child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -263,7 +268,7 @@ class _PinAuthPageState extends State<PinAuthPage> {
               // Здесь можно добавить логику для сброса PIN-кода
               // или перехода к настройкам
             },
-            child: const Text('Сбросить'),
+            child: Text(AppLocalizations.of(context)?.reset ?? 'Reset'),
           ),
         ],
       ),

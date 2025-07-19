@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../di/injection.dart';
 import '../../utils/colors.dart';
 import '../../utils/icons.dart';
+import '../../utils/app_localizations.dart';
 import '../components/components.dart';
 import '../components/transactions/logic/cubit.dart';
 import 'logic/cubit.dart';

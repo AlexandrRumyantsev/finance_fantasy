@@ -13,8 +13,8 @@ class SettingsPage extends StatelessWidget {
       backgroundColor: appColors.background,
       body: CustomScrollView(
         slivers: [
-          const CommonFinanceAppBar(
-            title: 'Настройки',
+          CommonFinanceAppBar(
+            title: AppLocalizations.of(context)?.settings ?? 'Settings',
           ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
@@ -22,7 +22,7 @@ class SettingsPage extends StatelessWidget {
               delegate: SliverChildListDelegate([
                 _buildSection(
                   context,
-                  'Внешний вид',
+                  AppLocalizations.of(context)?.appearance ?? 'Appearance',
                   [
                     _buildThemeTile(context, themeProvider),
                     _buildColorTile(context, themeProvider),
@@ -31,7 +31,7 @@ class SettingsPage extends StatelessWidget {
                 const SizedBox(height: 24),
                 _buildSection(
                   context,
-                  'Безопасность',
+                  AppLocalizations.of(context)?.security ?? 'Security',
                   [
                     _buildPinCodeTile(context, settingsProvider),
                     if (settingsProvider.isBiometricAvailable)
@@ -41,7 +41,7 @@ class SettingsPage extends StatelessWidget {
                 const SizedBox(height: 24),
                 _buildSection(
                   context,
-                  'Интерфейс',
+                  AppLocalizations.of(context)?.interface ?? 'Interface',
                   [
                     _buildHapticTile(context, settingsProvider),
                     _buildLanguageTile(context, settingsProvider),
@@ -92,8 +92,8 @@ class SettingsPage extends StatelessWidget {
 
     return ListTile(
       leading: Icon(Icons.brightness_6, color: appColors.primary),
-      title: const Text('Тема'),
-      subtitle: Text(_getThemeSubtitle(themeProvider.themeMode)),
+      title: Text(AppLocalizations.of(context)?.theme ?? 'Theme'),
+      subtitle: Text(_getThemeSubtitle(context, themeProvider.themeMode)),
       trailing: Switch(
         value: themeProvider.themeMode == ThemeMode.system,
         onChanged: (value) {
@@ -111,8 +111,12 @@ class SettingsPage extends StatelessWidget {
 
     return ListTile(
       leading: Icon(Icons.palette, color: appColors.primary),
-      title: const Text('Основной цвет'),
-      subtitle: const Text('Выберите цвет приложения'),
+      title:
+          Text(AppLocalizations.of(context)?.primaryColor ?? 'Primary color'),
+      subtitle: Text(
+        AppLocalizations.of(context)?.primaryColorDescription ??
+            'Choose app color',
+      ),
       trailing: Container(
         width: 24,
         height: 24,
@@ -139,8 +143,13 @@ class SettingsPage extends StatelessWidget {
 
         return ListTile(
           leading: Icon(Icons.lock_outline, color: appColors.primary),
-          title: const Text('PIN-код'),
-          subtitle: Text(isPinSet ? 'PIN-код установлен' : 'Защита приложения'),
+          title: Text(AppLocalizations.of(context)?.pinCode ?? 'PIN Code'),
+          subtitle: Text(
+            isPinSet
+                ? (AppLocalizations.of(context)?.pinCodeSet ?? 'PIN code set')
+                : (AppLocalizations.of(context)?.pinCodeDescription ??
+                    'App protection'),
+          ),
           trailing: isPinSet
               ? Switch(
                   value: true,
@@ -162,8 +171,11 @@ class SettingsPage extends StatelessWidget {
 
     return ListTile(
       leading: Icon(Icons.fingerprint, color: appColors.primary),
-      title: const Text('Биометрия'),
-      subtitle: const Text('Face ID / Touch ID'),
+      title: Text(AppLocalizations.of(context)?.biometric ?? 'Biometric'),
+      subtitle: Text(
+        AppLocalizations.of(context)?.biometricDescription ??
+            'Face ID / Touch ID',
+      ),
       trailing: Switch(
         value: settingsProvider.biometricEnabled,
         onChanged: settingsProvider.setBiometricEnabled,
@@ -179,8 +191,10 @@ class SettingsPage extends StatelessWidget {
 
     return ListTile(
       leading: Icon(Icons.vibration, color: appColors.primary),
-      title: const Text('Хаптики'),
-      subtitle: const Text('Тактильная обратная связь'),
+      title: Text(AppLocalizations.of(context)?.haptic ?? 'Haptic'),
+      subtitle: Text(
+        AppLocalizations.of(context)?.hapticDescription ?? 'Tactile feedback',
+      ),
       trailing: Switch(
         value: settingsProvider.hapticEnabled,
         onChanged: settingsProvider.setHapticEnabled,
@@ -196,32 +210,34 @@ class SettingsPage extends StatelessWidget {
 
     return ListTile(
       leading: Icon(Icons.language, color: appColors.primary),
-      title: const Text('Язык'),
-      subtitle: Text(_getLanguageSubtitle(settingsProvider.language)),
+      title: Text(AppLocalizations.of(context)?.language ?? 'Language'),
+      subtitle: Text(_getLanguageSubtitle(context, settingsProvider.language)),
       trailing: Icon(Icons.chevron_right, color: appColors.chevronRight),
       onTap: () => _showLanguageDialog(context, settingsProvider),
     );
   }
 
-  String _getThemeSubtitle(ThemeMode themeMode) {
+  String _getThemeSubtitle(BuildContext context, ThemeMode themeMode) {
+    final l10n = AppLocalizations.of(context);
     switch (themeMode) {
       case ThemeMode.light:
-        return 'Светлая';
+        return l10n?.themeLight ?? 'Light';
       case ThemeMode.dark:
-        return 'Темная';
+        return l10n?.themeDark ?? 'Dark';
       case ThemeMode.system:
-        return 'Системная';
+        return l10n?.themeSystem ?? 'System';
     }
   }
 
-  String _getLanguageSubtitle(String language) {
+  String _getLanguageSubtitle(BuildContext context, String language) {
+    final l10n = AppLocalizations.of(context);
     switch (language) {
       case 'ru':
-        return 'Русский';
+        return l10n?.russian ?? 'Русский';
       case 'en':
-        return 'English';
+        return l10n?.english ?? 'English';
       default:
-        return 'Русский';
+        return l10n?.russian ?? 'Русский';
     }
   }
 
@@ -232,12 +248,14 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: appColors.surfaceContainer,
-        title: const Text('Выберите тему'),
+        title:
+            Text(AppLocalizations.of(context)?.selectTheme ?? 'Select theme'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             RadioListTile<ThemeMode>(
-              title: const Text('Системная'),
+              title:
+                  Text(AppLocalizations.of(context)?.themeSystem ?? 'System'),
               value: ThemeMode.system,
               groupValue: themeProvider.themeMode,
               onChanged: (value) {
@@ -246,7 +264,7 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Светлая'),
+              title: Text(AppLocalizations.of(context)?.themeLight ?? 'Light'),
               value: ThemeMode.light,
               groupValue: themeProvider.themeMode,
               onChanged: (value) {
@@ -255,7 +273,7 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Темная'),
+              title: Text(AppLocalizations.of(context)?.themeDark ?? 'Dark'),
               value: ThemeMode.dark,
               groupValue: themeProvider.themeMode,
               onChanged: (value) {
@@ -276,7 +294,8 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: appColors.surfaceContainer,
-        title: const Text('Выберите цвет'),
+        title:
+            Text(AppLocalizations.of(context)?.selectColor ?? 'Select color'),
         content: SingleChildScrollView(
           child: ColorPicker(
             pickerColor: themeProvider.primaryColor,
@@ -290,7 +309,7 @@ class SettingsPage extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
-              'Готово',
+              AppLocalizations.of(context)?.done ?? 'Done',
               style: TextStyle(color: appColors.primary),
             ),
           ),
@@ -312,7 +331,12 @@ class SettingsPage extends StatelessWidget {
             await settingsProvider.setPinCode(pinCode);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('PIN-код установлен')),
+              SnackBar(
+                content: Text(
+                  AppLocalizations.of(context)?.pinCodeSetSuccess ??
+                      'PIN code set',
+                ),
+              ),
             );
           },
           onCancel: () => Navigator.of(context).pop(),
@@ -331,27 +355,34 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: appColors.surfaceContainer,
-        title: const Text('Отключить PIN-код'),
-        content: const Text(
-          'Вы уверены, что хотите отключить PIN-код? '
-          'Приложение больше не будет требовать ввода PIN-кода при запуске.',
+        title: Text(
+          AppLocalizations.of(context)?.disablePinCode ?? 'Disable PIN Code',
+        ),
+        content: Text(
+          AppLocalizations.of(context)?.disablePinCodeConfirm ??
+              'Are you sure you want to disable PIN code? The app will no longer require PIN code entry on startup.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Отмена'),
+            child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
           ),
           TextButton(
             onPressed: () async {
               await settingsProvider.removePinCode();
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('PIN-код отключен')),
+                SnackBar(
+                  content: Text(
+                    AppLocalizations.of(context)?.pinCodeDisabled ??
+                        'PIN code disabled',
+                  ),
+                ),
               );
             },
-            child: const Text(
-              'Отключить',
-              style: TextStyle(color: Colors.red),
+            child: Text(
+              AppLocalizations.of(context)?.delete ?? 'Delete',
+              style: const TextStyle(color: Colors.red),
             ),
           ),
         ],
@@ -369,12 +400,14 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: appColors.surfaceContainer,
-        title: const Text('Выберите язык'),
+        title: Text(
+          AppLocalizations.of(context)?.selectLanguage ?? 'Select language',
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             RadioListTile<String>(
-              title: const Text('Русский'),
+              title: Text(AppLocalizations.of(context)?.russian ?? 'Русский'),
               value: 'ru',
               groupValue: settingsProvider.language,
               onChanged: (value) {
@@ -383,7 +416,7 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             RadioListTile<String>(
-              title: const Text('English'),
+              title: Text(AppLocalizations.of(context)?.english ?? 'English'),
               value: 'en',
               groupValue: settingsProvider.language,
               onChanged: (value) {

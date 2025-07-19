@@ -5,6 +5,7 @@ import '../infrastructure/managers/settings_manager.dart';
 
 class SettingsProvider extends ChangeNotifier {
   SettingsProvider(this._settingsManager) {
+    // Инициализируем синхронно, а затем загружаем настройки
     _loadSettings();
   }
 
@@ -22,10 +23,18 @@ class SettingsProvider extends ChangeNotifier {
   bool get isBiometricAvailable => _isBiometricAvailable;
 
   Future<void> _loadSettings() async {
-    _hapticEnabled = _settingsManager.getHapticEnabled();
-    _biometricEnabled = _settingsManager.getBiometricEnabled();
-    _language = _settingsManager.getLanguage();
-    _isBiometricAvailable = await _localAuth.canCheckBiometrics;
+    try {
+      _hapticEnabled = _settingsManager.getHapticEnabled();
+      _biometricEnabled = _settingsManager.getBiometricEnabled();
+      _language = _settingsManager.getLanguage();
+      _isBiometricAvailable = await _localAuth.canCheckBiometrics;
+    } catch (e) {
+      // Устанавливаем значения по умолчанию
+      _hapticEnabled = true;
+      _biometricEnabled = false;
+      _language = 'ru';
+      _isBiometricAvailable = false;
+    }
     notifyListeners();
   }
 
@@ -50,7 +59,7 @@ class SettingsProvider extends ChangeNotifier {
   Future<bool> authenticateWithBiometrics() async {
     try {
       return await _localAuth.authenticate(
-        localizedReason: 'Подтвердите вашу личность',
+        localizedReason: 'Confirm your identity',
         options: const AuthenticationOptions(
           biometricOnly: true,
           stickyAuth: true,

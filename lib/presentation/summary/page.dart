@@ -44,7 +44,7 @@ class _SummaryPageState<C extends BaseSummaryCubit>
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: CommonSummaryHeaderCardDelegate(
-                    left: 'Всего',
+                    left: AppLocalizations.of(context)?.total ?? 'Всего',
                     right: '${state.totalAmount.toStringAsFixed(2)} RUB',
                   ),
                 ),

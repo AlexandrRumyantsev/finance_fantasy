@@ -142,7 +142,7 @@ class _SplashPageState extends State<SplashPage>
                     const SizedBox(height: 8),
                     // Подзаголовок
                     Text(
-                      'Управляйте своими финансами',
+                      'Manage your finances',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white.withValues(alpha: 0.8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/colors.dart';
+import '../../utils/app_localizations.dart';
 
 class PinCodePage extends StatefulWidget {
   final bool isSetup;
@@ -37,7 +38,9 @@ class _PinCodePageState extends State<PinCodePage> {
       appBar: AppBar(
         backgroundColor: colors.primary,
         foregroundColor: colors.text,
-        title: Text(widget.isSetup ? 'Установка PIN-кода' : 'Введите PIN-код'),
+        title: Text(widget.isSetup
+            ? (AppLocalizations.of(context)?.pinCodeSetup ?? 'PIN Code Setup')
+            : (AppLocalizations.of(context)?.enterPinCode ?? 'Enter PIN Code')),
         elevation: 0,
       ),
       body: SafeArea(
@@ -81,19 +84,24 @@ class _PinCodePageState extends State<PinCodePage> {
   }
 
   String _getTitle() {
+    final l10n = AppLocalizations.of(context);
     if (widget.isSetup) {
-      return _isConfirming ? 'Подтвердите PIN-код' : 'Создайте PIN-код';
+      return _isConfirming
+          ? (l10n?.confirmPinCode ?? 'Confirm PIN Code')
+          : (l10n?.createPinCode ?? 'Create PIN Code');
     }
-    return 'Введите PIN-код';
+    return l10n?.enterPinCode ?? 'Enter PIN Code';
   }
 
   String _getSubtitle() {
+    final l10n = AppLocalizations.of(context);
     if (widget.isSetup) {
       return _isConfirming
-          ? 'Повторите введенный PIN-код'
-          : 'Введите 4-значный PIN-код для защиты приложения';
+          ? (l10n?.confirmPinCodeDescription ?? 'Repeat the entered PIN code')
+          : (l10n?.createPinCodeDescription ??
+              'Enter 4-digit PIN code to protect the app');
     }
-    return 'Введите 4-значный PIN-код';
+    return l10n?.enterPinCodeDescription ?? 'Enter 4-digit PIN code';
   }
 
   Widget _buildPinDots() {

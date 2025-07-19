@@ -54,7 +54,7 @@ class SettingsManager {
   }
 
   Future<String?> getPinCode() async {
-    return await _secureStorage.read(key: 'pin_code');
+    return _secureStorage.read(key: 'pin_code');
   }
 
   Future<void> removePinCode() async {

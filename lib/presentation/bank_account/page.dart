@@ -29,7 +29,8 @@ class _BankAccountPageState extends State<BankAccountPage> {
             child: CustomScrollView(
               slivers: [
                 CommonFinanceAppBar(
-                  title: state.bankAccounts.firstOrNull?.name ?? 'Мой счет',
+                  title: state.bankAccounts.firstOrNull?.name ??
+                      (AppLocalizations.of(context)?.myAccount ?? 'Мой счет'),
                   suffix: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 150),
                     child: state.pageMode == PageMode.edit
