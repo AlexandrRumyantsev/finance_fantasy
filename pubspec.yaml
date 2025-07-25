@@ -53,6 +53,9 @@ dev_dependencies:
   injectable_generator: ^2.4.1
   flutter_launcher_icons: ^0.13.1
   fl_chart: ^1.0.0
+  golden_toolkit: ^0.15.0
+  integration_test:
+    sdk: flutter
 
 flutter_icons:
   android: true

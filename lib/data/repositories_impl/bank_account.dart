@@ -4,7 +4,7 @@ import '../../domain/entities/account_extended.dart';
 import '../../domain/entities/error.dart';
 import '../../domain/repositories/bank_account.dart';
 import '../../utils/either.dart';
-import '../data_source/rest/api_service.dart';
+import '../data_source/rest/api_service_interface.dart';
 import '../mappers/account.dart';
 import '../models/request/account_create_request.dart';
 import '../models/request/account_update_request.dart';

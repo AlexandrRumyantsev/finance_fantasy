@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../data/data_source/rest/api_service.dart';
+import '../../data/data_source/rest/api_service_interface.dart';
 import '../../data/repositories_impl/categories.dart';
 import '../../utils/either.dart';
 

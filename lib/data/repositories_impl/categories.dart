@@ -4,7 +4,7 @@ import '../../../domain/entities/category.dart';
 import '../../../domain/entities/error.dart';
 import '../../../domain/repositories/categories.dart';
 import '../../../utils/either.dart';
-import '../data_source/rest/api_service.dart';
+import '../data_source/rest/api_service_interface.dart';
 import '../mappers/category.dart';
 
 @injectable
