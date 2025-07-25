@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../data/data_source/rest/api_service.dart';
+import '../../data/data_source/rest/api_service_interface.dart';
 import '../../data/models/request/account_create_request.dart';
 import '../../data/models/request/account_update_request.dart';
 import '../../data/models/response/account_history_response.dart';

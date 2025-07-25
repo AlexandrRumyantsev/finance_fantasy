@@ -7,7 +7,7 @@ import '../../../domain/entities/transaction_short.dart';
 import '../../../domain/repositories/transactions.dart';
 import '../../../utils/either.dart';
 import '../../domain/entities/transaction_params.dart';
-import '../data_source/rest/api_service.dart';
+import '../data_source/rest/api_service_interface.dart';
 import '../mappers/transaction.dart';
 import '../models/request/transaction_request.dart';
 
